@@ -1,7 +1,7 @@
 var ans = new Vue({
 	el:'#ans',
       	data:{
-        	text:'0'
+        	text:''
       	}
 });
 var prim = new Vue({

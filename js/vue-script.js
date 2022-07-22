@@ -1,12 +1,12 @@
 var ans = new Vue({
 	el:'#ans',
       	data:{
-        	text:''
+        	text: '',
       	}
 });
 var prim = new Vue({
 	el:'#find',
       	data:{
-        	text:'0'
+        	text: '0',
       	}
 });

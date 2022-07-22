@@ -1,0 +1,33 @@
+@import "./var";
+@import "./light";
+@import "./work";
+@import "./pc";
+
+html{
+	cursor: url(./select.png), auto;
+	box-sizing: border-box;
+	font-family: 'Ubuntu', sans-serif;
+}
+body{
+	background-color: $dark
+}
+*, *:before, *:after{
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+*, body{
+	scrollbar-width: thin;
+	scrollbar-color: #faaf00 $dark;
+}
+*::-webkit-scrollbar{
+	width: 12px;
+}
+*::-webkit-scrollbar-track{
+	background: $dark;
+}
+*::-webkit-scrollbar-thumb{
+	background-color: #faaf00;
+	border-radius: 20px;
+	border: 3px solid $dark;
+}

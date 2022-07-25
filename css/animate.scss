@@ -1,0 +1,14 @@
+@keyframes blink{
+	0% {
+		border-inline-end: 6px solid rgba(255, 255, 255, 0.75);
+	}
+	49% {
+		border-inline-end: 6px solid rgba(255, 255, 255, 0.75);
+	}
+	50% {
+		border-inline-end: 6px solid rgba(255, 255, 255, 0);
+	}
+	100% {
+		border-inline-end: 6px solid rgba(255, 255, 255, 0);
+	}
+}

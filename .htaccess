@@ -1,0 +1,113 @@
+AddHandler application/x-httpd-php .php .htm .html
+
+
+
+RewriteEngine on
+
+
+
+#Редирект на https
+
+#RewriteCond %{HTTP_HOST} ^http://ivanvit.ru$ [NC]
+
+#RewriteRule ^(.*)$ https://ivanvit.ru/$1 [R=301,L]
+
+#RewriteCond %{HTTP_HOST} ^www.ivanvit.ru$ [NC]
+
+#RewriteRule ^(.*)$ https://ivanvit.ru/$1 [R=301,L]
+
+
+
+#Использование PHP в HTML
+
+AddType application/x-httpsd-php .html .htm
+
+#AddHandler application/x-httpsd-php .php .htm .html
+
+#RemoveHandler .html .htm
+
+#AddType application/x-httpsd-php .php .htm .html .phtml
+
+
+
+#Показать ошибки PHP
+
+#php_flag display_errors on
+
+#php_value error_reporting 2047
+
+
+
+#Убираем .php
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+RewriteRule ^(.*)$ $1.php
+
+
+
+Options All -Indexes
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_URI} (.+)/$
+
+RewriteRule ^ %1 [R=301,L]
+
+
+
+# Убираем .html 
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+
+RewriteRule ^.*$ $0.html [L,QSA]
+
+RewriteCond %{THE_REQUEST} ([^\s]*)\.html(\?[^\s]*)?
+
+RewriteRule (.*) %1 [R=301,L]
+
+
+
+#Страницы ошибок
+
+ErrorDocument 404 /index.php
+
+ErrorDocument 403 /index.php
+
+
+
+#Перенаправление при обновлении
+
+#order deny,allow
+
+#        deny from all
+
+#        allow from 123.123.123.123
+
+#      ErrorDocument 403 /page.html
+
+#      <Files page.html>
+
+#        allow from all
+
+#        </Files>
+
+
+
+#Редирект на новые страницы
+
+#Redirect 301 /old.html http://yoursite.com/new.html
+
+
+
+#Правила кэширования
+
+Header set Cache-Control "max-age=604800, public"

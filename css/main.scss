@@ -2,6 +2,7 @@
 @import "./light";
 @import "./work";
 @import "./pc";
+@import "./animate.scss";
 
 html{
 	cursor: url(./select.png), auto;
@@ -9,7 +10,8 @@ html{
 	font-family: 'Ubuntu', sans-serif;
 }
 body{
-	background-color: $dark
+	background-color: $dark;
+	min-width: 350px;
 }
 *, *:before, *:after{
 	box-sizing: inherit;
@@ -30,4 +32,10 @@ body{
 	background-color: #faaf00;
 	border-radius: 20px;
 	border: 3px solid $dark;
+}
+*::selection{
+	background: rgba(116, 116, 116, 0.6);
+}
+*::-moz-selection{
+	background: rgba(116, 116, 116, 0.6);
 }

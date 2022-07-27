@@ -12,11 +12,12 @@
 	align-items: center;
 	cursor: url(./link.png), auto;
 }
-.button:hover{
+.button:hover, .button.hover{
 	box-shadow: inset -2px -2px 10px -2px rgba(0, 0, 0, 0.72);
 }
 #find{
 	display: block;
+	border-inline-end: 6px solid rgba(255, 255, 255, 0.75);
 }
 #ans{
 	font-size: 40px;
@@ -44,7 +45,7 @@
 	grid-template-rows: 75px 75px 75px 75px 75px;
 	grid-template-columns: 25% 25% 25% 25%;
 }
-#C{
+.KeyC{
 	grid-row: 1;
 	grid-column: 1;
 }
@@ -60,15 +61,15 @@
 	grid-row: 1;
 	grid-column: 4;
 }
-#seven{
+.num7{
 	grid-row: 2;
 	grid-column: 1;
 }
-#eight{
+.num8{
 	grid-row: 2;
 	grid-column: 2;
 }
-#nine{
+.num9{
 	grid-row: 2;
 	grid-column: 3;
 }
@@ -76,31 +77,31 @@
 	grid-row: 2;
 	grid-column: 4;
 }
-#four{
+.num4{
 	grid-row: 3;
 	grid-column: 1;
 }
-#five{
+.num5{
 	grid-row: 3;
 	grid-column: 2;
 }
-#six{
+.num6{
 	grid-row: 3;
 	grid-column: 3;
 }
-#min{
+.Minus{
 	grid-row: 3;
 	grid-column: 4;
 }
-#one{
+.num1{
 	grid-row: 4;
 	grid-column: 1;
 }
-#two{
+.num2{
 	grid-row: 4;
 	grid-column: 2;
 }
-#three{
+.num3{
 	grid-row: 4;
 	grid-column: 3;
 }
@@ -108,23 +109,26 @@
 	grid-row: 4;
 	grid-column: 4;
 }
-#zero{
+.num0{
 	grid-row: 5;
 	grid-column: 1;
 }
-#dot{
+.Period{
 	grid-row: 5;
 	grid-column: 2;
 }
-#del{
+.Backspace{
 	grid-row: 5;
 	grid-column: 3;
 }
-#ok{
+.Enter{
 	grid-row: 5;
 	grid-column: 4;
 	background-color: #faaf00;
 }
 .blink{
 	animation: blink 1.5s linear forwards infinite;
+}
+#del{
+	height: 30%;
 }

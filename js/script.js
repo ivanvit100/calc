@@ -1,6 +1,5 @@
 output = "";
 find = "";
-ints = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 flag = true;
 curs = document.querySelector("#find");
 function blink(){
@@ -17,82 +16,103 @@ function outAns(){
 	else{ans.text = eval(find)}
 }
 function numAdd(num){
-	output += num;
-    find += num;
-    outRes(output.length);
-    outAns();
+	last = find.slice(-1);
+	if(last != ")"){
+		output += num;
+   		find += num;
+    	outRes(output.length);
+    	outAns();
+	}
 }
 function operatorAdd(operator, func){
 	last = find.slice(-1);
 	flag = true;
-	if(last in ints || last == ")"){
-		output += operator;
-    	find += func;
-    	outRes(output.length);
+	try{
+		if(Number.isInteger(eval(last)) || last == ")"){
+			output += operator;
+    		find += func;
+		}
+		if(output == ""){
+			output = prim.text + operator;
+			find = prim.text + func;
+		}
+	}catch(c){
+		output = output.substring(0, output.length - 1) + operator;
+		find = find.substring(0, find.length - 1) + func;
 	}
-	if(output == ""){
-		output = prim.text + operator;
-		find = prim.text + func;
-		outRes(output.length);
-	}
+	outRes(output.length);
 }
 function scAdd(input){
 	last = find.slice(-1);
-	if((input == "(") && !(last in ints)){
+	if((input == "(") && !(Number.isInteger(eval(last)))){
 		output += input;
 		find += input;
 		outRes(output.length);
 	}
-	if((input == ")") && (last in ints || last == ")") && (output.split("(").length - 1 > output.split(")").length - 1)){
+	if((input == ")") && (Number.isInteger(eval(last)) || last == ")") && (output.split("(").length - 1 > output.split(")").length - 1)){
 		output += input;
 		find += input;
 		outRes(output.length);
 	}
+	flag = true;
 }
-document.querySelector("#one").onclick = function(){numAdd("1")}
-document.querySelector("#two").onclick = function(){numAdd("2")}
-document.querySelector("#three").onclick = function(){numAdd("3")}
-document.querySelector("#four").onclick = function(){numAdd("4")}
-document.querySelector("#five").onclick = function(){numAdd("5")}
-document.querySelector("#six").onclick = function(){numAdd("6")}
-document.querySelector("#seven").onclick = function(){numAdd("7")}
-document.querySelector("#eight").onclick = function(){numAdd("8")}
-document.querySelector("#nine").onclick = function(){numAdd("9")}
-document.querySelector("#plus").onclick = function(){operatorAdd("+", "+")}
-document.querySelector("#min").onclick = function(){operatorAdd("-", "-")}
-document.querySelector("#mn").onclick = function(){operatorAdd("×", "*")}
-document.querySelector("#dl").onclick = function(){operatorAdd("÷", "/")}
-document.querySelector("#sc").onclick = function(){scAdd("(")}
-document.querySelector("#sc2").onclick = function(){scAdd(")")}
-document.querySelector("#zero").onclick = function(){
-	if(output != "" && output.slice(-1) in ints){numAdd("0")}
+function Zero(){
+	try{
+		chk = Number.isInteger(eval(output.slice(-1)));
+	}catch(c){
+		chk = false;
+	}
+	if(chk || output.slice(-1) == "."){numAdd("0")}
 	else{
 		output += "0."; 
 		find += "0.";
+		flag = false;
 		outRes(output.length);
-    	outAns();
+		outAns();
 	}
 }
-document.querySelector("#dot").onclick = function(){
+function Dot(){
 	last = find.slice(-1);
-	if(flag && last in ints){operatorAdd(".", ".")}
-	else if(flag && !(last in ints)){
+	try{
+		chk = Number.isInteger(eval(last));
+	}catch(c){
+		chk = false;
+	}
+	if(flag && chk){operatorAdd(".", ".")}
+	else if(flag){
 		output += "0."; 
 		find += "0.";
 		outRes(output.length);
-    	outAns();
+    	outAns();		
 	}
 	flag = false;
 }
-document.querySelector("#C").onclick = function(){
+function Clear(){
 	prim.text = "0";
 	ans.text = "";
 	output = "";
 	find = "";
+	flag = true;
 }
-document.querySelector("#ok").onclick = function(){
+function Ok(){
 	try{prim.text = ans.text.substring(0, 7)}catch(e){prim.text = ans.text}
 	ans.text = "";
 	output = "";
 	find = "";
+	flag = true;
+}
+function Del(){
+	last = find.slice(-1);
+	try{
+		if(Number.isInteger(eval(last))){
+			output = output.substring(0, output.length - 1);
+			find = find.substring(0, find.length - 1);
+			outAns();
+		}
+	}catch(c){
+		flag = true;
+		output = output.substring(0, output.length - 1);
+		find = find.substring(0, find.length - 1);
+	}
+	outRes();
 }

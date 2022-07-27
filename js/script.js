@@ -8,6 +8,7 @@ function blink(){
 }
 function outRes(ln){
 	if(ln > 7){prim.text = output.slice(-7)}else{prim.text = output}
+	if(ln == 0){prim.text = "0"}
 	try{ans.text = eval(find)}catch(err){console.log("Ошибка!")}
 	blink();
 }

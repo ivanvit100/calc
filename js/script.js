@@ -32,13 +32,15 @@ function operatorAdd(operator, func){
 			output += operator;
     		find += func;
 		}
-		if(output == ""){
+	}catch(c){
+		if(output == "" || output == ")"){
 			output = prim.text + operator;
 			find = prim.text + func;
 		}
-	}catch(c){
-		output = output.substring(0, output.length - 1) + operator;
-		find = find.substring(0, find.length - 1) + func;
+		else if(output != "("){
+			output = output.substring(0, output.length - 1) + operator;
+			find = find.substring(0, find.length - 1) + func;
+		}
 	}
 	outRes(output.length);
 }

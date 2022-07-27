@@ -1,7 +1,18 @@
+"Use strict"
+
+//Регистрация service-worker
+if ('serviceWorker' in navigator){
+ 	navigator.serviceWorker.register('/service.js', {
+    scope: '/'
+  });
+}
+
 output = "";
 find = "";
 flag = true;
 curs = document.querySelector("#find");
+
+//Функции кнопок
 function blink(){
 	curs.classList.remove("blink");
 	intervalID = setTimeout(function(){curs.classList.add("blink");}, 1000);
@@ -28,31 +39,29 @@ function numAdd(num){
 function operatorAdd(operator, func){
 	last = find.slice(-1);
 	flag = true;
-	try{
-		if(Number.isInteger(eval(last)) || last == ")"){
-			output += operator;
-    		find += func;
-		}
-	}catch(c){
-		if(output == "" || output == ")"){
-			output = prim.text + operator;
-			find = prim.text + func;
-		}
-		else if(output != "("){
-			output = output.substring(0, output.length - 1) + operator;
-			find = find.substring(0, find.length - 1) + func;
-		}
+	try{f = Number.isInteger(eval(last))}catch(c){f = false}
+	if(f || last == ")"){
+		output += operator;
+    	find += func;
+	}else if(output == ""){
+		output = prim.text + operator;
+		find = prim.text + func;
+	}else if(last != "("){
+		output = output.substring(0, output.length - 1) + operator;
+		find = find.substring(0, find.length - 1) + func;
 	}
 	outRes(output.length);
 }
 function scAdd(input){
 	last = find.slice(-1);
-	if((input == "(") && !(Number.isInteger(eval(last)))){
+	try{f = Number.isInteger(eval(last))}
+	catch(e){f = false}
+	if((input == "(") && !(f)){
 		output += input;
 		find += input;
 		outRes(output.length);
 	}
-	if((input == ")") && (Number.isInteger(eval(last)) || last == ")") && (output.split("(").length - 1 > output.split(")").length - 1)){
+	if((input == ")") && (f || last == ")") && (output.split("(").length - 1 > output.split(")").length - 1)){
 		output += input;
 		find += input;
 		outRes(output.length);
@@ -60,11 +69,8 @@ function scAdd(input){
 	flag = true;
 }
 function Zero(){
-	try{
-		chk = Number.isInteger(eval(output.slice(-1)));
-	}catch(c){
-		chk = false;
-	}
+	try{chk = Number.isInteger(eval(output.slice(-1)))}
+	catch(c){chk = false}
 	if(chk || output.slice(-1) == "."){numAdd("0")}
 	else{
 		output += "0."; 
@@ -76,11 +82,8 @@ function Zero(){
 }
 function Dot(){
 	last = find.slice(-1);
-	try{
-		chk = Number.isInteger(eval(last));
-	}catch(c){
-		chk = false;
-	}
+	try{chk = Number.isInteger(eval(last))}
+	catch(c){chk = false}
 	if(flag && chk){operatorAdd(".", ".")}
 	else if(flag){
 		output += "0."; 
@@ -98,7 +101,8 @@ function Clear(){
 	flag = true;
 }
 function Ok(){
-	try{prim.text = ans.text.substring(0, 7)}catch(e){prim.text = ans.text}
+	try{prim.text = ans.text.substring(0, 7)}
+	catch(e){prim.text = ans.text}
 	ans.text = "";
 	output = "";
 	find = "";

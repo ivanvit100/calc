@@ -114,5 +114,5 @@ function Del(){
 		output = output.substring(0, output.length - 1);
 		find = find.substring(0, find.length - 1);
 	}
-	outRes();
+	outRes(output.length);
 }

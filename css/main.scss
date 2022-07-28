@@ -39,3 +39,6 @@ body{
 *::-moz-selection{
 	background: rgba(116, 116, 116, 0.6);
 }
+.button, #ans, #find, #switch{
+	cursor: url(./link.png), auto;
+}

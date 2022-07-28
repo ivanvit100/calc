@@ -12,3 +12,17 @@
 		border-inline-end: 6px solid rgba(255, 255, 255, 0);
 	}
 }
+@keyframes blinkL{
+	0% {
+		border-inline-end: 6px solid rgba(0, 0, 0, 0.6);
+	}
+	49% {
+		border-inline-end: 6px solid rgba(0, 0, 0, 0.6);
+	}
+	50% {
+		border-inline-end: 6px solid rgba(0, 0, 0, 0);
+	}
+	100% {
+		border-inline-end: 6px solid rgba(0, 0, 0, 0);
+	}
+}

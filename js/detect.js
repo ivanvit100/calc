@@ -18,8 +18,8 @@ document.querySelector(".Period").onclick = function(){Dot()}
 document.querySelector(".KeyC").onclick = function(){Clear()}
 document.querySelector(".Enter").onclick = function(){Ok()}
 document.querySelector(".Backspace").onclick = function(){Del()}
+document.querySelector("#switch").onclick = function(){light()}
 document.addEventListener('keydown', function(event){
-	console.log(event.code);
 	if(event.key >= 0 && event.key <= 9){
 		el = document.querySelector(".num" + event.key);
 	}
@@ -42,9 +42,6 @@ document.addEventListener('keydown', function(event){
 			break;
 		}
 	}
-	/*if(el == null){
-		el = document.querySelector("." + event.code);
-	}*/
 	el.click();
 	el.classList.add("hover");
 	intervalID = setTimeout(function(){el.classList.remove("hover")}, 200);

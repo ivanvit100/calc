@@ -14,6 +14,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
+	<div id="switch"><img :src="src" alt="switch" id="swh"></div>
 	<div id="output">
 		<span id="find" class="blink">{{text}}</span>
 		<span id="ans">{{text}}</span>
@@ -30,15 +31,15 @@
 		<div class="button num4">4</div>
 		<div class="button num5">5</div>
 		<div class="button num6">6</div>
-		<div class="button orange Minus">–</div>
+		<div class="button orange Minus NumpadSubtract">–</div>
 		<div class="button num1">1</div>
 		<div class="button num2">2</div>
 		<div class="button num3">3</div>
-		<div class="button orange" id="plus">+</div>
+		<div class="button orange NumpadAdd" id="plus">+</div>
 		<div class="button num0">0</div>
-		<div class="button Period Comma">.</div>
+		<div class="button Period Comma NumpadDecimal">.</div>
 		<div class="button Backspace"><img src="./img/dl.png" alt="del" id="del"></div>
-		<div class="button Enter">=</div>
+		<div class="button Enter NumpadEnter">=</div>
 	</div>
 	<script src="./js/vue.js"></script>
 	<script data-cfasync="false" src="./js/vue-script.js"></script>

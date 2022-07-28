@@ -128,6 +128,7 @@ function Del(){
 	outRes(output.length);
 }
 
+//Theme
 function light(){
 	com = document.querySelector("#common");
 	for(var i = 1; i <= 40; i += 2){
@@ -135,4 +136,6 @@ function light(){
 	}
 	document.querySelector("#output").classList.toggle("light");
 	com.classList.toggle("light");
+	if(com.classList.contains('light')){swh.src = "./img/dark.png"}
+	else{swh.src = "./img/light.png"}
 }

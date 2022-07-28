@@ -10,3 +10,9 @@ var prim = new Vue({
         	text: '0',
       	}
 });
+var swh = new Vue({
+	el:'#swh',
+      	data:{
+        	src: './img/light.png',
+      	}
+});

@@ -24,5 +24,18 @@
 	background-color: #a4b4fc!important;
 }
 .orange.light{
-	background-color: #c4cdf5!important;
+	background-color: $blue!important;
+}
+body.light{
+	background-color: $light;
+}
+*.light, body.light{
+	scrollbar-color: $blue $light;
+}
+*.light::-webkit-scrollbar-track{
+	background: $light;
+}
+*.light::-webkit-scrollbar-thumb{
+	background-color: $blue;
+	border: 3px solid $light;
 }

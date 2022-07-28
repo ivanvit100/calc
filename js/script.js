@@ -135,6 +135,8 @@ function light(){
 		com.childNodes[i].classList.toggle("light");
 	}
 	document.querySelector("#output").classList.toggle("light");
+	document.querySelector("body").classList.toggle("light");
+	document.querySelector("*").classList.toggle("light");
 	com.classList.toggle("light");
 	if(com.classList.contains('light')){swh.src = "./img/dark.png"}
 	else{swh.src = "./img/light.png"}

@@ -124,7 +124,7 @@
 .Enter{
 	grid-row: 5;
 	grid-column: 4;
-	background-color: #faaf00;
+	background-color: #faaf00 !important;
 }
 .blink{
 	animation: blink 1.5s linear forwards infinite;

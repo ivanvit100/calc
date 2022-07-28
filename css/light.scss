@@ -1,0 +1,10 @@
+.button.light > #del{
+	filter: brightness(0%);
+}
+.button.light, #output.light{
+	color: black;
+	background-color: $white;
+}
+#common.light{
+	background-color: $light;
+}

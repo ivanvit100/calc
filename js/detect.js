@@ -19,7 +19,7 @@ document.querySelector(".KeyC").onclick = function(){Clear()}
 document.querySelector(".Enter").onclick = function(){Ok()}
 document.querySelector(".Backspace").onclick = function(){Del()}
 document.addEventListener('keydown', function(event){
-	//alert(event.key);
+	console.log(event.code);
 	if(event.key >= 0 && event.key <= 9){
 		el = document.querySelector(".num" + event.key);
 	}
@@ -30,12 +30,6 @@ document.addEventListener('keydown', function(event){
 			break;
 			case '*':
 			el = document.querySelector("#mn");
-			break;
-			case '.':
-			el = document.querySelector("#dot");
-			break;
-			case ',':
-			el = document.querySelector("#dot");
 			break;
 			case '(':
 			el = document.querySelector("#sc");
@@ -48,6 +42,9 @@ document.addEventListener('keydown', function(event){
 			break;
 		}
 	}
+	/*if(el == null){
+		el = document.querySelector("." + event.code);
+	}*/
 	el.click();
 	el.classList.add("hover");
 	intervalID = setTimeout(function(){el.classList.remove("hover")}, 200);

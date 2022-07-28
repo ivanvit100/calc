@@ -101,7 +101,11 @@ function Clear(){
 	flag = true;
 }
 function Ok(){
-	try{prim.text = ans.text.substring(0, 7)}
+	try{
+		output = ans.text;
+		output = output.substring(0, 7);
+		prim.text = output;
+	}
 	catch(e){prim.text = ans.text}
 	ans.text = "";
 	output = "";
@@ -122,4 +126,13 @@ function Del(){
 		find = find.substring(0, find.length - 1);
 	}
 	outRes(output.length);
+}
+
+function light(){
+	com = document.querySelector("#common");
+	for(var i = 1; i <= 40; i += 2){
+		com.childNodes[i].classList.toggle("light");
+	}
+	document.querySelector("#output").classList.toggle("light");
+	com.classList.toggle("light");
 }

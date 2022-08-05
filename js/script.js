@@ -58,7 +58,7 @@ function operatorAdd(operator, func){
 	if(f || last == ")"){
 		output += operator;
     	find += func;
-	}else if(output == "" && prim.text !== true && prim.text !== false){
+	}else if(output == "" && prim.text != "true" && prim.text != "false"){
 		output = prim.text + operator;
 		find = prim.text + func;
 	}else if(output == ""){

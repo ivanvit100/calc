@@ -26,3 +26,11 @@
 		border-inline-end: 6px solid rgba(0, 0, 0, 0);
 	}
 }
+@keyframes copy{
+	0% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 0;
+	}
+}

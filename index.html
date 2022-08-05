@@ -20,27 +20,47 @@
 		<span id="ans">{{text}}</span>
 	</div>
 	<div id="common">
-		<div class="button orange KeyC">C</div>
-		<div class="button orange" id="sc">(</div>
-		<div class="button orange" id="sc2">)</div>
-		<div class="button orange" id="dl">÷</div>
-		<div class="button num7">7</div>
-		<div class="button num8">8</div>
-		<div class="button num9">9</div>
-		<div class="button orange" id="mn">×</div>
-		<div class="button num4">4</div>
-		<div class="button num5">5</div>
-		<div class="button num6">6</div>
-		<div class="button orange Minus NumpadSubtract">–</div>
-		<div class="button num1">1</div>
-		<div class="button num2">2</div>
-		<div class="button num3">3</div>
-		<div class="button orange NumpadAdd" id="plus">+</div>
-		<div class="button num0">0</div>
-		<div class="button Period Comma NumpadDecimal">.</div>
-		<div class="button Backspace"><img src="./img/dl.png" alt="del" id="del"></div>
-		<div class="button Enter NumpadEnter">=</div>
+		<div class="button orange KeyC" onclick="Clear()">C</div>
+		<div class="button orange" id="sc" onclick="scAdd('(')">(</div>
+		<div class="button orange" id="sc2" onclick="scAdd(')')">)</div>
+		<div class="button orange" id="dl" onclick="operatorAdd('÷', '/')">÷</div>
+		<div class="button num7" onclick="numAdd('7')">7</div>
+		<div class="button num8" onclick="numAdd('8')">8</div>
+		<div class="button num9" onclick="numAdd('9')">9</div>
+		<div class="button orange" id="mn" onclick="operatorAdd('×', '*')">×</div>
+		<div class="button num4" onclick="numAdd('4')">4</div>
+		<div class="button num5" onclick="numAdd('5')">5</div>
+		<div class="button num6" onclick="numAdd('6')">6</div>
+		<div class="button orange Minus NumpadSubtract" onclick="operatorAdd('-', '-')">–</div>
+		<div class="button num1" onclick="numAdd('1')">1</div>
+		<div class="button num2" onclick="numAdd('2')">2</div>
+		<div class="button num3" onclick="numAdd('3')">3</div>
+		<div class="button orange NumpadAdd Equal" id="plus" onclick="operatorAdd('+', '+')">+</div>
+		<div class="button num0" onclick="Zero()">0</div>
+		<div class="button Period Comma NumpadDecimal" onclick="Dot()">.</div>
+		<div class="button Backspace" onclick="Del()"><img src="./img/dl.png" alt="del" id="del"></div>
+		<div class="button Enter NumpadEnter" onclick="Ok()">=</div>
 	</div>
+	<div id="more">
+		<div id="equals" onclick="operatorAdd('=', '==')">=</div>
+		<div id="n_equals" onclick="operatorAdd('≠', '!=')">≠</div>
+		<div id="m_eqals" onclick="operatorAdd('≤', '<=')">≤</div>
+		<div id="b_eqals" onclick="operatorAdd('≥', '>=')">≥</div>
+		<div id="less" onclick="operatorAdd('<', '<')"><</div>
+		<div id="mr" onclick="operatorAdd('>', '>')">></div>
+		<div id="pi" class="KeyP" onclick="cnstAdd('π', Math.PI)">π</div>
+		<div id="eps" class="KeyE" onclick="cnstAdd('e', Math.E)">e</div>
+		<div id="sin" onclick="cnstAdd('sin(', 'Math.sin(')">sin</div>
+		<div id="cos" onclick="cnstAdd('cos(', 'Math.cos(')">cos</div>
+		<div id="tg" onclick="cnstAdd('tan(', 'Math.tan(')">tan</div>
+		<div id="ctg" onclick="cnstAdd('ctn(', 'ctn(')">ctn</div>
+		<div id="sqare" onclick="cnstAdd('√(', 'Math.sqrt(')">√</div>
+		<div id="deg" onclick="operatorAdd('^', '**')">xʸ</div>
+		<div id="pr" onclick="fAdd()">x!</div>
+		<div id="log" onclick="cnstAdd('log(', 'Math.log10(')">log</div>
+		<div id="ln" onclick="cnstAdd('ln(', 'Math.log(')">ln</div>
+	</div>
+	<div id="copy" v-if="seen">Скопировано</div>
 	<script src="./js/vue.js"></script>
 	<script data-cfasync="false" src="./js/vue-script.js"></script>
 	<script data-cfasync="false" src="./js/script.js"></script>

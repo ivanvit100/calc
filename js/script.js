@@ -143,13 +143,24 @@ function Ok(){
 		flag = true;
 	}
 }
+function findDEl(){
+	while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(find.slice(-1))){
+		find = find.substring(0, find.length - 1);
+	}
+}
 function Del(){
 	last = find.slice(-1);
 	last4 = output.slice(-4);
 	flag = true;
 	if(["!"].includes(output.slice(-1))){
-		while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(find.slice(-1))){
-			find = find.substring(0, find.length - 1);
+		findDEl();
+		if(find.slice(-2) == "e+"){
+			find = find.substring(0, find.length - 2);
+			findDEl();
+			if(find.slice(-1) == "."){
+				find = find.substring(0, find.length - 1);
+				findDEl();
+			}
 		}
 		n = 0;
 		nm = "";

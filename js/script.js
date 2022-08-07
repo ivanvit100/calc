@@ -234,3 +234,7 @@ function factorial(n){
 	try{return (n != 1) ? n * factorial(n - 1) : 1}	
 	catch(e){return "Error"}
 }
+
+function more_hide(){
+	status = document.querySelector("*").classList.toggle("status");
+}

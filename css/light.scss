@@ -1,5 +1,5 @@
 *.light{
-	#common{
+	#common, body{
 		background-color: $light;
 	}
 	.button > #del{
@@ -21,15 +21,11 @@
 	.Enter{
 		background-color: #a4b4fc!important;
 	}
-	.orange{
+	.orange, #more_hide, #more{
 		background-color: $blue!important;
 	}
 	#more{
 		color: black;
-		background-color: $blue;
-	}
-	body{
-		background-color: $light;
 	}
 	*, body{
 		scrollbar-color: $blue $light;

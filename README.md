@@ -1,3 +1,4 @@
+![preview](https://calc.ivanvit.ru/img/preview.png)
 # Functionally WEB-based calculator
 Used technologies: JS, CSS, SCSS, Vue.js, Html
 
@@ -8,10 +9,9 @@ You may find this on the [site](https://calc.ivanvit.ru)
 
 ## Functionality
 1. Basic calculator
+2. Dark/light themes
+3. Math functions (sin, cos, log etc.)
 
 ## Plans
-1. Add more math functions (sin, cos etc.)
-2. Add themes
-3. Create desktop version
-4. Create programming calculator
-5. Converter
+1. Create programming calculator
+2. Converter

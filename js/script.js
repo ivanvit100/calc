@@ -236,5 +236,8 @@ function factorial(n){
 }
 
 function more_hide(){
+	document.querySelector("#arrow").style.animation = "none";
 	status = document.querySelector("*").classList.toggle("status");
+	if(status){document.querySelector("#arrow").style.animation = "rotate 0.3s linear forwards"}
+	else{document.querySelector("#arrow").style.animation = "rotate 0.3s linear forwards reverse"}
 }

@@ -27,6 +27,9 @@
 	#more{
 		color: black;
 	}
+	#arrow{
+		filter: invert(0);
+	}
 	*, body{
 		scrollbar-color: $blue $light;
 	}

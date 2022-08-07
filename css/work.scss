@@ -110,7 +110,7 @@
 #more_hide{
 	background-color: $orange;
 	width: 100%;
-	height: 20px;
+	height: 25px;
 }
 #pi{
 	font-family: origin;
@@ -122,4 +122,12 @@
 	#common{
 		display: none;
 	}
+}
+#arrow{
+	position: relative;
+	top: 4px;
+	height: 60%;
+	margin-left: 25px;
+	filter: invert(100%);
+	transform: rotate(180deg);
 }

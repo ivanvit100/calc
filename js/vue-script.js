@@ -1,3 +1,9 @@
+/* Cкрипт определения объектов Vue проекта "Калькулятор | ivanvit.ru"
+Project: https://calc.ivanvit.ru
+
+GitHub: https://github.com/ivanvit100
+E-Mail: develope@ivanvit.ru */
+
 var ans = new Vue({
 	el:'#ans',
   data:{

@@ -297,8 +297,7 @@ function more_hide(){
 	/*Функция переключения статуса страницы,
 	необходима для отображения дополнительных
 	математических клавиш в мобильной версии сайта.*/
-	document.querySelector("#arrow").style.animation = "none";
 	status = document.querySelector("*").classList.toggle("status");
-	if(status){document.querySelector("#arrow").style.animation = "rotate 0.3s linear forwards"}
-	else{document.querySelector("#arrow").style.animation = "rotate 0.3s linear forwards reverse"}
+	cmn = document.querySelector("#arrow").classList.toggle("toMore");
+	document.querySelector("#arrow").classList.toggle("toCommon");
 }

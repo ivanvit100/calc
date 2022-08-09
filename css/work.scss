@@ -129,5 +129,12 @@
 	height: 60%;
 	margin-left: 25px;
 	filter: invert(100%);
+}
+.toMore{
+	animation: rotate 1s linear forwards;
+	transform: rotate(0deg);
+}
+.toCommon{
+	animation: rotate 1s linear reverse;
 	transform: rotate(180deg);
 }

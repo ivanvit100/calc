@@ -68,7 +68,7 @@ function numAdd(num){
 	/*Функция вывода чисел на экран*/
 	last = find.slice(-1);
 	out = output.slice(-1);
-	if(last != ")" && !(["e", "π"].includes(out))){
+	if(last != ")" && !(["e", "π", "!"].includes(out))){
 		if(output == "0"){
 			output = find = "";
 		}
@@ -253,6 +253,10 @@ function Del(){
 	}else{
 		find = find.substring(0, find.length - 1);
 	}
+	if(output.slice(-2) == "0."){
+		find = find.substring(0, find.length - 1);
+		output = output.substring(0, output.length - 1);
+	}
 	output = output.substring(0, output.length - 1);
 	outRes(output.length, false);
 	outAns();
@@ -268,23 +272,30 @@ function cnstAdd(p, f){
 	}
 	fact = "";
 }
+function newNum(){
+	/*Вспомогательная функция, извлекающая число для вычисления факториала,
+	в случае если переменная fact пуста*/
+	n = 0;
+	nm = "";
+	while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(output.substring(output.length - 1 - n, output.length - n))){
+		nm = output.substring(output.length - 1 - n, output.length - n) + nm;
+		n += 1;
+	}
+	return nm;
+}
 function fAdd(){
 	/*Функция проверяет возможность вычисления факториала и вызывает 
 	функцию factorial(n) в случае успеха.*/
 	if(output == ""){
 		output = prim.text;
-		n = 0;
-		nm = "";
-		while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(output.substring(output.length - 1 - n, output.length - n))){
-			nm = output.substring(output.length - 1 - n, output.length - n) + nm;
-			n += 1;
-		}
-		fact = nm;
+		nm = newNum();
+		if(nm != "0"){fact = nm}
 		if(output.substring(0, 1) == "-"){find = "-"}
 	}
+	if(fact == "" && ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(output.slice(-1))){fact = newNum()}
 	if(Number.isInteger(eval(fact))){
 		output += "!";
-		find += find.substring(0, find.length - fact.length) + String(factorial(fact));
+		find = find.substring(0, find.length - fact.length) + String(factorial(fact));
 		fact = "";
 	}
 	outRes(output.length);

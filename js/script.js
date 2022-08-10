@@ -195,12 +195,13 @@ function Del(){
 	last4 = output.slice(-4);
 	flag = true;
 	if(["!"].includes(output.slice(-1))){
-		/*Удаляя факториал, сперва удаляется его числовое значение
-		из переменной find (в том числе большие числа вида a.b...e+... ,
+		/*Если удаляется факториал: 
+		1. Удаляется его числовое значениеиз переменной find 
+		(в том числе большие числа вида a.b...e+... ,
 		где e - константа, a и b - целые числа).
-		Затем последовательной проверкой каждого символа строки ввода
-		на принадлежность его к массиву целых чисел находится
-		и вносится в переменную значение исходного числа.*/
+		2. Последовательной проверкой каждого символа строки ввода
+		(справа налево) на принадлежность его к массиву целых чисел 
+		находится и вносится в переменную значение исходного числа.*/
 		findDEl();
 		if(find.slice(-2) == "e+"){
 			find = find.substring(0, find.length - 2);
@@ -219,14 +220,16 @@ function Del(){
 		}
 		output = output + "!";
 		find += nm;
+		fact = nm;
 	/*В последующих условиях удаляется необходимое количество символов
 	из переменных find и output в соответствии с удаляемой функцией.
 	Также обновляется значение переменной flag.*/
 	}else if(output.slice(-1) == "π" || output.slice(-1) == "e"){
 		find = find.substring(0, find.length - 17);
-	}else if(last in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]){
+	}else if(last in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]){
 		flag = false;
 		find = find.substring(0, find.length - 1);
+		fact = fact.substring(0, fact.length - 1);
 		outAns();
 	}else if(last == "="){
 		find = find.substring(0, find.length - 2);
@@ -268,11 +271,22 @@ function cnstAdd(p, f){
 function fAdd(){
 	/*Функция проверяет возможность вычисления факториала и вызывает 
 	функцию factorial(n) в случае успеха.*/
+	if(output == ""){
+		output = prim.text;
+		n = 0;
+		nm = "";
+		while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(output.substring(output.length - 1 - n, output.length - n))){
+			nm = output.substring(output.length - 1 - n, output.length - n) + nm;
+			n += 1;
+		}
+		fact = nm;
+		if(output.substring(0, 1) == "-"){find = "-"}
+	}
 	if(Number.isInteger(eval(fact))){
 		output += "!";
-		find = find.substring(0, find.length - fact.length) + String(factorial(fact));
+		find += find.substring(0, find.length - fact.length) + String(factorial(fact));
+		fact = "";
 	}
-	fact = "";
 	outRes(output.length);
 	outAns();
 }

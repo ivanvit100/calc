@@ -1,5 +1,5 @@
-var CACHE_STATIC_NAME = 'static-v2.7';
-var CACHE_DYNAMIC_NAME = 'dynamic-v2.7';
+var CACHE_STATIC_NAME = 'static-v2.8';
+var CACHE_DYNAMIC_NAME = 'dynamic-v2.8';
 
 self.addEventListener('install', function (event) {
   console.log('Installing Service Worker ...');
@@ -21,8 +21,7 @@ self.addEventListener('install', function (event) {
           './js/script.js',
           './js/detect.js',
           './js/vue.js',
-          './js/vue-script.js',
-          'https://fonts.googleapis.com/css2?family=Ubuntu&display=swap'
+          './js/vue-script.js'
         ]);
       })
   )

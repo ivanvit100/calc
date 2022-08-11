@@ -105,6 +105,7 @@ E-Mail: develope@ivanvit.ru */
 	font-size: 23px;
 	background-color: $orange;
 	padding: 10px;
+	min-height: calc(100vh - 240px);
 }
 #more > div{
 	margin: auto;

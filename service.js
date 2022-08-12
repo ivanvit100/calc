@@ -1,4 +1,4 @@
-let cache_name = "v2.11"; 
+let cache_name = "v2.12"; 
 
 const assets = [
   './index.html',
@@ -14,8 +14,7 @@ const assets = [
   './js/script.js',
   './js/detect.js',
   './js/vue.js',
-  './js/vue-script.js',
-  'https://fonts.googleapis.com/css2?family=Ubuntu&display=swap'
+  './js/vue-script.js'
 ];
 
 self.addEventListener("install", event => {
@@ -31,13 +30,13 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
-    if (event.request.url === "https://calc.ivanvit.ru/") {
+    if(event.request.url === "https://calc.ivanvit.ru/"){
         event.respondWith(
             fetch(event.request).catch(err =>
-                self.cache.open(cache_name).then(cache => cache.matchAll())
+                self.caches.open(cache_name).then(cache => cache.matchAll())
             )
         );
-    } else {
+    }else{
         event.respondWith(
             fetch(event.request).catch(err =>
                 caches.match(event.request).then(response => response)

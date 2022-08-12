@@ -1,4 +1,4 @@
-let cache_name = "v2.9"; 
+let cache_name = "v2.10"; 
 
 const assets = [
   './index.html',
@@ -6,7 +6,7 @@ const assets = [
   './css/link.png',
   './css/select.png',
   './img/dl.png',
-  './img/logo.png',
+  './img/logo.ico',
   './img/light.png',
   './img/dark.png',
   './img/arrow.png',
@@ -18,7 +18,7 @@ const assets = [
 ];
 
 self.addEventListener("install", event => {
-    console.log("installing...");
+    console.log("[Service Worker]: Installing...");
     event.waitUntil(
         caches
             .open(cache_name)

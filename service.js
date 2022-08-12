@@ -1,4 +1,4 @@
-let cache_name = "v2.12"; 
+let cache_name = "v2.13"; 
 
 const assets = [
   './index.html',
@@ -33,7 +33,7 @@ self.addEventListener("fetch", event => {
     if(event.request.url === "https://calc.ivanvit.ru/"){
         event.respondWith(
             fetch(event.request).catch(err =>
-                self.caches.open(cache_name).then(cache => cache.matchAll())
+                self.caches.open(cache_name).then(cache => cache.match("./index.html"))
             )
         );
     }else{

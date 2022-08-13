@@ -28,10 +28,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
 <body>
-	<div id="switch"><img :src="src" alt="switch" id="swh"></div>
 	<div id="output">
-		<span id="find" class="blink">{{text}}</span>
-		<span id="ans">{{text}}</span>
+		<div id="switch"><img :src="src" alt="switch" id="swh"></div>
+		<span id="find" class="blink">{{findText}}</span>
+		<span id="ans">{{ansText}}</span>
 	</div>
 	<div id="more_hide"><img src="./img/arrow.png" alt="open" id="arrow" class="toCommon"></div>
 	<div id="common">
@@ -77,8 +77,8 @@
 	</div>
 	<div id="copy" v-if="seen">Скопировано</div>
 	<script src="./js/vue.js"></script>
-	<script data-cfasync="false" src="./js/vue-script.js"></script>
 	<script data-cfasync="false" src="./js/script.js"></script>
-	<script data-cfasync="false" src="./js/detect.js"></script>
+	<script data-cfasync="false" src="./js/vue-script.js"></script>
+	<script data-cfasync="true" src="./js/detect.js"></script>
 </body>
 </html>

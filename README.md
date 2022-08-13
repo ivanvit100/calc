@@ -11,6 +11,7 @@ You may find this on the [site](https://calc.ivanvit.ru)
 1. Basic calculator
 2. Dark/light themes
 3. Math functions (sin, cos, log etc.)
+4. PWA (offline mode)
 
 ## Plans
 1. Create programming calculator

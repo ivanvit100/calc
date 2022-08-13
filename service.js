@@ -1,4 +1,4 @@
-let cache_name = "v2.13"; 
+let cache_name = "v2.14"; 
 
 const assets = [
   './index.html',

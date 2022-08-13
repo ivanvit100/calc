@@ -12,10 +12,11 @@ find содержит вычисляемое выражение, значени�
 flag используется для постановки плавающей точки,
 fact - последнее целое число в формате строки (необходимо
 для вычисления факториала)
-prim.text - объект Vue, содержащий выводимый на экран текст,
-ans.text выводит промежуточный ответ посредством Vue*/
+prim.text = '' - запуск метода Vue, вычисляюего
+и выводящего на экран пример и ответ.*/
 output = find = fact = "";
 flag = true;
+ent = false;
 curs = document.querySelector("#find");
 
 //Регистрация service-worker
@@ -35,34 +36,6 @@ function blink(){
 	intervalID = setTimeout(function(){curs.classList.add("blink")}, 200);
 }
 
-//Вывод на экран
-function outRes(ln, f){
-	/*Функция получет на вход значение длины строки и
-	логическую переменную, где true - на экран выводится финальный ответ,
-	false - на экран необходимо вывести последние count символов примера.*/
-	count = parseInt(document.querySelector("#find").clientWidth/45);
-	/*На экран выводится не более чем count символов (ширина области ответа,
-	поделённая на фиксированное значение ширины наибольшего символа - 45).
-	f == true => на экране первые count символов, иначе count последних.*/
-	if(ln > count && f){prim.text = output.substring(0, count - 3) + "..."}
-	else if(ln > count){prim.text = output.slice(-count)}else{prim.text = output}
-	if(ln == 0){prim.text = "0"}
-	try{ans.text = eval(find)}catch(err){console.warn("Ошибка!")}
-	blink();
-}
-function outAns(){
-	/*Функция выводит предварительный ответ в специальную область на
-	экране. Ответ рассчитывается при помощи функции eval().
-	Issue: исправить "неверные" ответы
-	Пример: 0.3 - 0.2 = 0.0999...*/
-	try{
-		count = parseInt(document.querySelector("#find").clientWidth/45) + 3;
-		if(eval(find).toString().length > count){ans.text = eval(find).toString().substring(0, count - 1)}
-		else{ans.text = eval(find)}
-		if([Infinity, NaN].includes(ans.text)){ans.text = "Error"}
-	}catch(e){console.warn("Ошибка!")}
-}
-
 //Функции кнопок
 function numAdd(num){
 	/*Функция вывода чисел на экран*/
@@ -75,8 +48,7 @@ function numAdd(num){
 		output += num;
    		find += num;
    		fact += num
-    	outRes(output.length, false);
-    	outAns();
+    	prim.text = '';
 	}
 }
 function operatorAdd(operator, func){
@@ -92,7 +64,7 @@ function operatorAdd(operator, func){
 	if(f || last == ")"){
 		output += operator;
     	find += func;
-	}else if(output == "" && prim.text != "true" && prim.text != "false"){
+	}else if(output == "" && prim.text != "true" && prim.text != "false" && !(prim.text.slice(-1) == ".")){
 		output = prim.text + operator;
 		find = prim.text + func;
 	}else if(output == ""){
@@ -108,7 +80,7 @@ function operatorAdd(operator, func){
 		find = find.substring(0, find.length - 1) + func;
 	}
 	if(func != "."){fact = ""}
-	outRes(output.length, false);
+	prim.text = '';
 }
 function scAdd(input){
 	/*Функция получает на вход символ скобки "(" или ")"*/
@@ -121,13 +93,12 @@ function scAdd(input){
 	if((input == "(") && !(f) && (last != ".")){
 		output += input;
 		find += input;
-		outRes(output.length, false);
 	}
 	if((input == ")") && (f || last == ")") && (last != ".") && (output.split("(").length - 1 > output.split(")").length - 1)){
 		output += input;
 		find += input;
-		outRes(output.length, false);
 	}
+	prim.text = '';
 	fact = "";
 	flag = true;
 }
@@ -143,8 +114,7 @@ function Zero(){
 		find += "0.";
 		fact += "0.";
 		flag = false;
-		outRes(output.length, false);
-		outAns();
+		prim.text = '';
 	}
 }
 function Dot(){
@@ -161,26 +131,26 @@ function Dot(){
 		output += "0."; 
 		find += "0.";
 		fact += "0.";
-		outRes(output.length, false);
-    	outAns();		
+		prim.text = '';	
 	}
 	flag = false;
 }
 function Clear(){
 	/*Очистка экрана*/
-	prim.text = "0";
-	ans.text = output = find = fact = "";
+	output = find = fact = "";
 	flag = true;
+	prim.text = '';
 }
 function Ok(){
 	/*Вывод на экран ответа из дополнительной строки, очистка*/
-	if(ans.text != ""){
-		if(ans.text != "Error"){output = String(ans.text)}
+	if(prim.ansText != ""){
+		if(prim.ansText != "Error"){output = String(prim.ansText)}
 		else{output = ""}
-		outRes(output.length, true)
-		ans.text = find = output = "";
+		find = "";
+		ent = true;
+		prim.text = '';
 		flag = true;
-		fact = "";
+		fact = output = "";
 	}
 }
 function findDEl(){
@@ -232,7 +202,6 @@ function Del(){
 		flag = false;
 		find = find.substring(0, find.length - 1);
 		fact = fact.substring(0, fact.length - 1);
-		outAns();
 	}else if(last == "="){
 		find = find.substring(0, find.length - 2);
 	}else if(["sin(", "cos(", "tan("].includes(last4)){
@@ -260,8 +229,7 @@ function Del(){
 		output = output.substring(0, output.length - 1);
 	}
 	output = output.substring(0, output.length - 1);
-	outRes(output.length, false);
-	outAns();
+	prim.text = '';
 }
 function cnstAdd(p, f){
 	/*Функция получает на вход константу и её вычисляемый аналог в JS.
@@ -270,7 +238,7 @@ function cnstAdd(p, f){
 	if(["=", ">", "<", "-", "+", "/", "*", "", "("].includes(last)){
 		output += p;
     	find += f;
-    	outRes(output.length, false);
+    	prim.text = '';
 	}
 	fact = "";
 }
@@ -300,16 +268,15 @@ function fAdd(){
 		find = find.substring(0, find.length - fact.length) + String(factorial(fact));
 		fact = "";
 	}
-	outRes(output.length);
-	outAns();
+	prim.text = '';
 }
 
 function light(){
 	/*Функция переключает тему сайта, смена иконки по
 	логическому значению пременной f.*/
 	f = document.querySelector("*").classList.toggle("light");
-	if(f){swh.src = "./img/dark.png"}
-	else{swh.src = "./img/light.png"}
+	if(f){prim.src = "./img/dark.png"}
+	else{prim.src = "./img/light.png"}
 }
 
 function ctn(x){return 1/Math.tan(x)}//Вычисление котангенса

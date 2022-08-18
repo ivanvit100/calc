@@ -92,13 +92,15 @@ E-Mail: develope@ivanvit.ru */
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	font-size: 17px;
+	color: black;
 }
 .success{
 	display: block;
 	animation: copy 1s linear forwards infinite;
 }
 #more{
-	display: none;
+	display: grid;
 	grid-template-columns: 25% 25% 25% 25%;
 	grid-template-rows: 75px 75px 75px 75px 75px;
 	color: white;
@@ -123,14 +125,6 @@ E-Mail: develope@ivanvit.ru */
 #pi{
 	font-family: origin;
 }
-.status{
-	#more{
-		display: grid;
-	}
-	#common{
-		display: none;
-	}
-}
 #arrow{
 	position: relative;
 	top: 4px;
@@ -139,10 +133,8 @@ E-Mail: develope@ivanvit.ru */
 	filter: invert(100%);
 }
 .toMore{
-	animation: rotate 1s linear forwards;
 	transform: rotate(0deg);
 }
 .toCommon{
-	animation: rotate 1s linear reverse;
 	transform: rotate(180deg);
 }

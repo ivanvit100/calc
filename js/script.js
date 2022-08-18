@@ -11,10 +11,8 @@ find содержит вычисляемое выражение, значени�
 выводится на экран в поле ответов,
 flag используется для постановки плавающей точки,
 fact - последнее целое число в формате строки (необходимо
-для вычисления факториала)
-prim.text = '' - запуск метода Vue, вычисляюего
-и выводящего на экран пример и ответ.*/
-output = find = fact = "";
+для вычисления факториала).*/
+fact = "";
 flag = true;
 ent = false;
 curs = document.querySelector("#find");
@@ -39,22 +37,22 @@ function blink(){
 //Функции кнопок
 function numAdd(num){
 	/*Функция вывода чисел на экран*/
-	last = find.slice(-1);
-	out = output.slice(-1);
+	last = prim.find.slice(-1);
+	out = prim.output.slice(-1);
 	if(last != ")" && !(["e", "π", "!"].includes(out))){
-		if(output == "0"){
-			output = find = "";
+		if(prim.output == "0"){
+			prim.output = prim.find = "";
 		}
-		output += num;
-   		find += num;
+		prim.output += num;
+   		prim.find += num;
    		fact += num
-    	prim.text = '';
+    	prim.outputGo();
 	}
 }
 function operatorAdd(operator, func){
 	/*Функция получает на вход математический оператор, выводимый на экран,
 	и его вычисляемый аналог для подстановки в find*/
-	last = find.slice(-1);
+	last = prim.find.slice(-1);
 	flag = true;
 	try{f = Number.isInteger(eval(last))}catch(c){f = false}
 	/*Оператор выводится на экран, если перед ним стояло число,
@@ -62,110 +60,110 @@ function operatorAdd(operator, func){
 	предыдущий.
 	Issue: требуется рефакторинг*/
 	if(f || last == ")"){
-		output += operator;
-    	find += func;
-	}else if(output == "" && prim.text != "true" && prim.text != "false" && !(prim.text.slice(-1) == ".")){
-		output = prim.text + operator;
-		find = prim.text + func;
-	}else if(output == ""){
-		output = "0" + operator;
-		find = "0" + func;
+		prim.output += operator;
+    	prim.find += func;
+	}else if(prim.output == "" && prim.findText != "true" && prim.findText!= "false" && !(prim.findText.slice(-1) == ".")){
+		prim.output = prim.findText + operator;
+		prim.find = prim.findText + func;
+	}else if(prim.output == ""){
+		prim.output = "0" + operator;
+		prim.find = "0" + func;
 	}else if(["="].includes(last)){
-		output = output.substring(0, output.length - 1) + operator;
-		find = find.substring(0, find.length - 2) + func;
+		prim.output = prim.output.substring(0, prim.output.length - 1) + operator;
+		prim.find = prim.find.substring(0, prim.find.length - 2) + func;
 	}else if(last == "("){
 		console.warn("Ошибка")
 	}else{
-		output = output.substring(0, output.length - 1) + operator;
-		find = find.substring(0, find.length - 1) + func;
+		prim.output = prim.output.substring(0, prim.output.length - 1) + operator;
+		prim.find = prim.find.substring(0, prim.find.length - 1) + func;
 	}
 	if(func != "."){fact = ""}
-	prim.text = '';
+	prim.outputGo();
 }
 function scAdd(input){
 	/*Функция получает на вход символ скобки "(" или ")"*/
-	last = find.slice(-1);
+	last = prim.find.slice(-1);
 	try{f = Number.isInteger(eval(last))}
 	catch(e){f = false}
 	/*Скобка ставится, если последний символ равен входному 
 	или является числом.
 	Закрывающих скобок не может быть больше, чем открывающих.*/
 	if((input == "(") && !(f) && (last != ".")){
-		output += input;
-		find += input;
+		prim.output += input;
+		prim.find += input;
 	}
-	if((input == ")") && (f || last == ")") && (last != ".") && (output.split("(").length - 1 > output.split(")").length - 1)){
-		output += input;
-		find += input;
+	if((input == ")") && (f || last == ")") && (last != ".") && (prim.output.split("(").length - 1 > prim.output.split(")").length - 1)){
+		prim.output += input;
+		prim.find += input;
 	}
-	prim.text = '';
+	prim.outputGo();
 	fact = "";
 	flag = true;
 }
 function Zero(){
 	/*Функция обрабатывает число "0" и запускает функцию numAdd().
 	Если последний символ не "." или число, то после нуля дописывается "."*/
-	try{chk = Number.isInteger(eval(output.slice(-1)))}
+	try{chk = Number.isInteger(eval(prim.output.slice(-1)))}
 	catch(c){chk = false}
-	if(chk || output.slice(-1) == "."){numAdd("0")}
-	else if(["e", "π"].includes(output.slice(-1)) || output.slice(-1) == ")"){console.warn("Ошибка")}
+	if(chk || prim.output.slice(-1) == "."){numAdd("0")}
+	else if(["e", "π"].includes(prim.output.slice(-1)) || prim.output.slice(-1) == ")"){console.warn("Ошибка")}
 	else{
-		output += "0."; 
-		find += "0.";
+		prim.output += "0."; 
+		prim.find += "0.";
 		fact += "0.";
 		flag = false;
-		prim.text = '';
+		prim.outputGo();
 	}
 }
 function Dot(){
 	/*Функция добавляет в выражение плавающую точку.
 	Если точка - первый символ числа, на экран выводится "0."*/
-	last = find.slice(-1);
+	last = prim.find.slice(-1);
 	try{chk = Number.isInteger(eval(last))}
 	catch(c){chk = false}
-	if(flag && chk && !(["e", "π"].includes(output.slice(-1)))){
+	if(flag && chk && !(["e", "π"].includes(prim.output.slice(-1)))){
 		operatorAdd(".", ".");
 		fact += ".";
 	}
-	else if(flag && (output.slice(-1) != ")") && !(["e", "π"].includes(output.slice(-1)))){
-		output += "0."; 
-		find += "0.";
+	else if(flag && (prim.output.slice(-1) != ")") && !(["e", "π"].includes(prim.output.slice(-1)))){
+		prim.output += "0."; 
+		prim.find += "0.";
 		fact += "0.";
-		prim.text = '';	
+		prim.outputGo();	
 	}
 	flag = false;
 }
 function Clear(){
 	/*Очистка экрана*/
-	output = find = fact = "";
+	prim.output = prim.find = fact = "";
 	flag = true;
-	prim.text = '';
+	prim.outputGo();
 }
 function Ok(){
 	/*Вывод на экран ответа из дополнительной строки, очистка*/
 	if(prim.ansText != ""){
-		if(prim.ansText != "Error"){output = String(prim.ansText)}
-		else{output = ""}
-		find = "";
+		if(prim.ansText != "Error"){prim.output = String(prim.ansText)}
+		else{prim.output = ""}
+		prim.find = "";
 		ent = true;
-		prim.text = '';
+		prim.outputGo();
 		flag = true;
-		fact = output = "";
+		fact = prim.output = "";
 	}
 }
 function findDEl(){
 	/*Вспомогательная функция для функции Del(),
 	осуществляющая удаление элементов сложных чисел в поле ответа.*/
-	while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(find.slice(-1))){
-		find = find.substring(0, find.length - 1);
+	while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(prim.find.slice(-1))){
+		prim.find = prim.find.substring(0, prim.find.length - 1);
 	}
 }
 function Del(){
 	/*Issue: требуется рефакторинг*/
-	last = find.slice(-1);
-	last4 = output.slice(-4);
+	last = prim.find.slice(-1);
+	last4 = prim.output.slice(-4);
 	flag = true;
-	if(["!"].includes(output.slice(-1))){
+	if(["!"].includes(prim.output.slice(-1))){
 		/*Если удаляется факториал: 
 		1. Удаляется его числовое значениеиз переменной find 
 		(в том числе большие числа вида a.b...e+... ,
@@ -175,70 +173,70 @@ function Del(){
 		находится и вносится в переменную значение исходного числа.
 		3.Обновляются все связанные переменные.*/
 		findDEl();
-		if(find.slice(-2) == "e+"){
-			find = find.substring(0, find.length - 2);
+		if(prim.find.slice(-2) == "e+"){
+			prim.find = prim.find.substring(0, prim.find.length - 2);
 			findDEl();
-			if(find.slice(-1) == "."){
-				find = find.substring(0, find.length - 1);
+			if(prim.find.slice(-1) == "."){
+				prim.find = prim.find.substring(0, prim.find.length - 1);
 				findDEl();
 			}
 		}
 		n = 0;
 		nm = "";
-		output = output.substring(0, output.length - 1);
-		while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(output.substring(output.length - 1 - n, output.length - n))){
-			nm = output.substring(output.length - 1 - n, output.length - n) + nm;
+		prim.output = prim.output.substring(0, prim.output.length - 1);
+		while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(prim.output.substring(prim.output.length - 1 - n, prim.output.length - n))){
+			nm = prim.output.substring(prim.output.length - 1 - n, prim.output.length - n) + nm;
 			n += 1;
 		}
-		output = output + "!";
-		find += nm;
+		prim.output = prim.output + "!";
+		prim.find += nm;
 		fact = nm;
 	/*В последующих условиях удаляется необходимое количество символов
 	из переменных find и output в соответствии с удаляемой функцией.
 	Также обновляется значение переменной flag.*/
-	}else if(output.slice(-1) == "π" || output.slice(-1) == "e"){
-		find = find.substring(0, find.length - 17);
+	}else if(prim.output.slice(-1) == "π" || prim.output.slice(-1) == "e"){
+		prim.find = prim.find.substring(0, prim.find.length - 17);
 	}else if(last in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]){
 		flag = false;
-		find = find.substring(0, find.length - 1);
+		prim.find = prim.find.substring(0, prim.find.length - 1);
 		fact = fact.substring(0, fact.length - 1);
 	}else if(last == "="){
-		find = find.substring(0, find.length - 2);
+		prim.find = prim.find.substring(0, prim.find.length - 2);
 	}else if(["sin(", "cos(", "tan("].includes(last4)){
-		find = find.substring(0, find.length - 9);
-		output = output.substring(0, output.length - 3);
+		prim.find = prim.find.substring(0, prim.find.length - 9);
+		prim.output = prim.output.substring(0, prim.output.length - 3);
 	}else if(["log("].includes(last4)){
-		find = find.substring(0, find.length - 11);
-		output = output.substring(0, output.length - 3);
-	}else if(["ln("].includes(output.slice(-3))){
-		find = find.substring(0, find.length - 9);
-		output = output.substring(0, output.length - 2);
-	}else if(["ctn("].includes(output.slice(-4))){
-		find = find.substring(0, find.length - 4);
-		output = output.substring(0, output.length - 3);
-	}else if(["√("].includes(output.slice(-2))){
-		find = find.substring(0, find.length - 10);
-		output = output.substring(0, output.length - 1);
-	}else if(["^"].includes(output.slice(-1))){
-		find = find.substring(0, find.length - 2);
+		prim.find = prim.find.substring(0, prim.find.length - 11);
+		prim.output = prim.output.substring(0, prim.output.length - 3);
+	}else if(["ln("].includes(prim.output.slice(-3))){
+		prim.find = prim.find.substring(0, prim.find.length - 9);
+		prim.output = prim.output.substring(0, prim.output.length - 2);
+	}else if(["ctn("].includes(prim.output.slice(-4))){
+		prim.find = prim.find.substring(0, prim.find.length - 4);
+		prim.output = prim.output.substring(0, prim.output.length - 3);
+	}else if(["√("].includes(prim.output.slice(-2))){
+		prim.find = prim.find.substring(0, prim.find.length - 10);
+		prim.output = prim.output.substring(0, prim.output.length - 1);
+	}else if(["^"].includes(prim.output.slice(-1))){
+		prim.find = prim.find.substring(0, prim.find.length - 2);
 	}else{
-		find = find.substring(0, find.length - 1);
+		prim.find = prim.find.substring(0, prim.find.length - 1);
 	}
-	if(output.slice(-2) == "0."){
-		find = find.substring(0, find.length - 1);
-		output = output.substring(0, output.length - 1);
+	if(prim.output.slice(-2) == "0."){
+		prim.find = prim.find.substring(0, prim.find.length - 1);
+		prim.output = prim.output.substring(0, prim.output.length - 1);
 	}
-	output = output.substring(0, output.length - 1);
-	prim.text = '';
+	prim.output = prim.output.substring(0, prim.output.length - 1);
+	prim.outputGo();
 }
 function cnstAdd(p, f){
 	/*Функция получает на вход константу и её вычисляемый аналог в JS.
 	Подстановка происходит, если последний символ - не число.*/
-	last = find.slice(-1);
+	last = prim.find.slice(-1);
 	if(["=", ">", "<", "-", "+", "/", "*", "", "("].includes(last)){
-		output += p;
-    	find += f;
-    	prim.text = '';
+		prim.output += p;
+    	prim.find += f;
+    	prim.outputGo();
 	}
 	fact = "";
 }
@@ -247,8 +245,8 @@ function newNum(){
 	в случае если переменная fact пуста*/
 	n = 0;
 	nm = "";
-	while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(output.substring(output.length - 1 - n, output.length - n))){
-		nm = output.substring(output.length - 1 - n, output.length - n) + nm;
+	while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(prim.output.substring(prim.output.length - 1 - n, prim.output.length - n))){
+		nm = prim.output.substring(prim.output.length - 1 - n, prim.output.length - n) + nm;
 		n += 1;
 	}
 	return nm;
@@ -256,19 +254,19 @@ function newNum(){
 function fAdd(){
 	/*Функция проверяет возможность вычисления факториала и вызывает 
 	функцию factorial(n) в случае успеха.*/
-	if(output == ""){
-		output = prim.text;
+	if(prim.output == ""){
+		prim.output = prim.findText;
 		nm = newNum();
 		if(nm != "0"){fact = nm}
-		if(output.substring(0, 1) == "-"){find = "-"}
+		if(prim.output.substring(0, 1) == "-"){prim.find = "-"}
 	}
-	if(fact == "" && ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(output.slice(-1))){fact = newNum()}
+	if(fact == "" && ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(prim.output.slice(-1))){fact = newNum()}
 	if(Number.isInteger(eval(fact))){
-		output += "!";
-		find = find.substring(0, find.length - fact.length) + String(factorial(fact));
+		prim.output += "!";
+		prim.find = prim.find.substring(0, prim.find.length - fact.length) + String(factorial(fact));
 		fact = "";
 	}
-	prim.text = '';
+	prim.outputGo();
 }
 
 function light(){
@@ -291,7 +289,6 @@ function more_hide(){
 	/*Функция переключения статуса страницы,
 	необходима для отображения дополнительных
 	математических клавиш в мобильной версии сайта.*/
-	status = document.querySelector("*").classList.toggle("status");
 	cmn = document.querySelector("#arrow").classList.toggle("toMore");
 	document.querySelector("#arrow").classList.toggle("toCommon");
 }

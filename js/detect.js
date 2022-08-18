@@ -49,14 +49,3 @@ document.addEventListener('keydown', function(event){
 		intervalID = setTimeout(function(){el.classList.remove("hover")}, 200);
 	}catch(e){console.warn("Нет команды для клавиши: " + event.key + "/" + event.code)}
 });
-
-curs.ondblclick = function(){
-	/*Функция вызывается при двойном клике на окно отображения примера.
-	Предназначена для отключения встроенного поведения, копирования
-	содержимого поля и отображения соответствующего сообщения пользователю.*/
-	event.preventDefault();
-	curs.focus();  
-	document.execCommand('copy');
-	copy.seen = true;
-	setTimeout(function(){copy.seen = false}, 1450);
-}

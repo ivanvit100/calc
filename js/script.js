@@ -24,6 +24,19 @@ if ('serviceWorker' in navigator){
 	});
 }
 
+//Waves
+var config = {
+	duration: 500
+};
+var options = {
+	position: {
+		x: 20,
+		y: 20
+	}
+}
+Waves.attach('#output', ['waves-block', 'waves-classic']);
+Waves.init(config);
+
 //Отключение контекстного меню
 document.oncontextmenu = function(){return false};
 

@@ -21,6 +21,7 @@
 	<meta property="twitter:image" content="https://calc.ivanvit.ru/img/preview.png">
 	<title>Калькулятор | ivanvit.ru</title>
 	<link rel="stylesheet" href="./css/style.css"><!--Файл стиля-->
+	<link rel="stylesheet" href="./css/waves.min.css">
 	<link rel="icon" href="./img/logo.ico"><!--Логотип-->
 	<link rel="manifest" href="./manifest.webmanifest"><!--Манифест отладки-->
 	<link rel="preconnect" href="https://fonts.googleapis.com"> <!--Шрифты-->
@@ -33,7 +34,6 @@
 			<div id="switch"><img :src="src" alt="switch" id="swh"></div>
 			<span id="find" @dblclick="copyToClipboard">{{findText}}</span>
 			<span id="ans">{{ansText}}</span>
-			<div id="copy" v-if="seen">Скопировано</div>
 		</div>
 		<div id="more_hide" @click="showOne = !(showOne)"><img src="./img/arrow.png" alt="open" id="arrow" class="toCommon"></div>
 		<div id="common" v-show="show">
@@ -77,8 +77,10 @@
 			<div id="log" onclick="cnstAdd('log(', 'Math.log10(')">log</div>
 			<div id="ln" onclick="cnstAdd('ln(', 'Math.log(')">ln</div>
 		</div>
+		<div id="copy" v-if="seen">Скопировано</div>
 	</div>
 	<script src="./js/vue.js"></script>
+	<script data-cfasync="false" src="./js/waves.min.js"></script>
 	<script data-cfasync="false" src="./js/script.js"></script>
 	<script data-cfasync="false" src="./js/vue-script.js"></script>
 	<script data-cfasync="true" src="./js/detect.js"></script>

@@ -1,10 +1,11 @@
-let cache_name = "v2.16"; 
+let cache_name = "v2.17"; 
 
 const assets = [
   './index.html',
   './css/style.css',
   './css/link.png',
   './css/select.png',
+  './css/waves.min.css',
   './img/dl.png',
   './img/logo.ico',
   './img/light.png',
@@ -14,7 +15,9 @@ const assets = [
   './js/script.js',
   './js/detect.js',
   './js/vue.js',
-  './js/vue-script.js'
+  './js/vue-script.js',
+  './js/waves.min.js',
+  './js/waves.min.js.map'
 ];
 
 self.addEventListener("install", event => {

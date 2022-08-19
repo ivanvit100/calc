@@ -90,7 +90,6 @@ E-Mail: develope@ivanvit.ru */
 	text-align: center;
 	border: 0;
 	border-radius: 90px;
-	animation: copy 1.5s linear forwards infinite;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -139,4 +138,10 @@ E-Mail: develope@ivanvit.ru */
 }
 .toCommon{
 	transform: rotate(180deg);
+}
+.copy-enter-active, .copy-leave-active{
+	transition: opacity .5s;
+}
+.copy-enter, .copy-leave-to{
+	opacity: 0;
 }

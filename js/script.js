@@ -27,13 +27,6 @@ if ('serviceWorker' in navigator){
 //Отключение контекстного меню
 document.oncontextmenu = function(){return false};
 
-function blink(){
-	/*Функция, реализующая "торможение" анимацию "моргания курсора"
-	посредством временного удаления класса элемента.*/
-	curs.classList.remove("blink");
-	intervalID = setTimeout(function(){curs.classList.add("blink")}, 200);
-}
-
 //Функции кнопок
 function numAdd(num){
 	/*Функция вывода чисел на экран*/

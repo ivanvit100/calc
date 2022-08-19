@@ -65,7 +65,9 @@ E-Mail: develope@ivanvit.ru */
 	background-color: #faaf00 !important;
 }
 .blink{
-	animation: blink 1.5s linear forwards infinite;
+	animation: blink 1.5s linear infinite;
+	-webkit-animation: blink 1.5s linear infinite;
+	-o-animation: blink 1.5s linear infinite;
 }
 #del{
 	height: 30%;

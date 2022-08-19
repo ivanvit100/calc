@@ -44,8 +44,10 @@ var prim = new Vue({
       setTimeout(function(){prim.seen = false}, 1450);
     },
     resize: function(){
-      /*Функция, обновляющая значение переменной width*/
+      /*Функция, обновляющая вывод и значение переменной width
+      при изменении ширины экрана.*/
       this.width = window.innerWidth;
+      this.outputGo();
     },
     outputGo: function(){
       /*Функция выводит на экран не более чем count символов (ширина области ответа,
@@ -57,7 +59,7 @@ var prim = new Vue({
       else if(this.output.length > count){this.findText = this.output.slice(-count)}else{this.findText = this.output}
       if(this.output.length == 0){this.findText =  "0"}
       this.ansGo();
-      blink();
+      this.blink();
     },
     ansGo: function(){
       /*Функция выводит предварительный ответ в специальную область на
@@ -81,11 +83,18 @@ var prim = new Vue({
           this.output = "";
         }else{console.warn("Ошибка!")}
       }
+    },
+    blink: function(){
+      /*Функция, реализующая "торможение" анимации "моргания курсора"
+      при нажатии кнопок посредством временного удаления класса элемента.*/
+      document.querySelector("#find").classList.remove("blink");
+      intervalID = setTimeout(function(){document.querySelector("#find").classList.add("blink")}, 200);
     }
   },
   created(){
     /*Метод, предназначенный для отслеживания изменения ширины экрана.*/
     window.addEventListener('resize', this.resize);
     this.resize();
+    document.querySelector("#find").classList.add("blink");
   }
 });

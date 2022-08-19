@@ -31,7 +31,7 @@
 	<div id="container">
 		<div id="output">
 			<div id="switch"><img :src="src" alt="switch" id="swh"></div>
-			<span id="find" class="blink" @dblclick="copyToClipboard">{{findText}}</span>
+			<span id="find" @dblclick="copyToClipboard">{{findText}}</span>
 			<span id="ans">{{ansText}}</span>
 			<div id="copy" v-if="seen">Скопировано</div>
 		</div>

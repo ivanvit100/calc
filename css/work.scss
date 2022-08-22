@@ -66,8 +66,6 @@ E-Mail: develope@ivanvit.ru */
 }
 .blink{
 	animation: blink 1.5s linear infinite;
-	-webkit-animation: blink 1.5s linear infinite;
-	-o-animation: blink 1.5s linear infinite;
 }
 #del{
 	height: 30%;
@@ -86,7 +84,7 @@ E-Mail: develope@ivanvit.ru */
 	height: 40px;
 	position: fixed;
 	left: calc(50vw - 60px);
-	bottom: 20px;
+	bottom: -200px;
 	text-align: center;
 	border: 0;
 	border-radius: 90px;
@@ -95,10 +93,9 @@ E-Mail: develope@ivanvit.ru */
 	justify-content: center;
 	font-size: 17px;
 	color: black;
-}
-.success{
-	display: block;
-	animation: copy 1s linear forwards infinite;
+	opacity: 0;
+	transition: opacity 1s;
+	z-index: 2;
 }
 #more{
 	display: grid;
@@ -132,6 +129,7 @@ E-Mail: develope@ivanvit.ru */
 	height: 60%;
 	margin-left: 25px;
 	filter: invert(100%);
+	transition: transform .2s;
 }
 .toMore{
 	transform: rotate(0deg);
@@ -139,9 +137,8 @@ E-Mail: develope@ivanvit.ru */
 .toCommon{
 	transform: rotate(180deg);
 }
-.copy-enter-active, .copy-leave-active{
-	transition: opacity .5s;
-}
-.copy-enter, .copy-leave-to{
-	opacity: 0;
+#copyInput{
+	position: absolute;
+	top: -200px;
+	left: -200px;
 }

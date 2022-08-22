@@ -12,7 +12,6 @@ var prim = new Vue({
     findText: '0',
     ansText: '',
     src: './img/light.png',
-    seen: false,
     showOne: true,
     width: 0,
     find: '',
@@ -38,10 +37,17 @@ var prim = new Vue({
       Предназначена для отключения встроенного поведения, копирования
       содержимого поля и отображения соответствующего сообщения пользователю.*/
       event.preventDefault();
-      curs.focus();  
-      document.execCommand('copy');
-      prim.seen = true;
-      setTimeout(function(){prim.seen = false}, 1450);
+      navigator.clipboard.writeText(this.findText).then(() => {
+        console.log("[Navigator]: clipboard write '" + this.findText + "' success")
+      }, () => {
+        document.querySelector("#copyInput").select();  
+        cs = document.execCommand('copy');
+        console.log("[Document]: clipboard write '" + cs + "'");
+      });
+      document.querySelector("#copy").style.bottom = "20px";
+      document.querySelector("#copy").style.opacity = 0.75;
+      setTimeout(function(){document.querySelector("#copy").style.opacity = 0}, 750);
+      setTimeout(function(){document.querySelector("#copy").style.bottom = "-200px"}, 1450);
     },
     resize: function(){
       /*Функция, обновляющая вывод и значение переменной width
@@ -56,8 +62,8 @@ var prim = new Vue({
       и count первых - если ответ.*/
       count = parseInt(document.querySelector("#find").clientWidth/45);
       if(this.output.slice(-1) == "…" && this.output.length > count){this.findText = this.output.substring(0, count - 2) + "…"}
-      else if(this.output.length > count){this.findText = this.output.slice(-count)}else{this.findText = this.output}
-      if(this.output.length == 0){this.findText =  "0"}
+      else{this.output.length > count ? this.findText = this.output.slice(-count) : this.findText = this.output}
+      this.output.length == 0 ? this.findText =  "0" : this.findText = this.findText
       this.ansGo();
       this.blink();
     },
@@ -70,10 +76,8 @@ var prim = new Vue({
       if(this.find.length == 0){this.ansText =  ""}
       try{
         count = parseInt(document.querySelector("#find").clientWidth/45) + 3;
-        if(eval(this.find).toString().length > count){stop = eval(this.find).toString().substring(0, count - 1)}
-        else{stop = eval(this.find)}
-        if([Infinity, NaN].includes(stop)){this.ansText = "Error"}
-        else{this.ansText = stop}
+        eval(this.find).toString().length > count ? stop = eval(this.find).toString().substring(0, count - 1) : stop = eval(this.find);
+        [Infinity, NaN].includes(stop) ? this.ansText = "Error" : this.ansText = stop;
       }catch(e){
         count = parseInt(document.querySelector("#find").clientWidth/45);
         if(ent && this.output.length > count){

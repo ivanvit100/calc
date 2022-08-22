@@ -24,17 +24,12 @@ if ('serviceWorker' in navigator){
 	});
 }
 
-//Waves
+//Эффект волн при нажатии
 var config = {
-	duration: 500
+	duration: 300,
 };
-var options = {
-	position: {
-		x: 20,
-		y: 20
-	}
-}
 Waves.attach('#output', ['waves-block', 'waves-classic']);
+Waves.attach('.moreButton', ['waves-block', 'waves-classic']);
 Waves.init(config);
 
 //Отключение контекстного меню
@@ -278,12 +273,11 @@ function fAdd(){
 function light(){
 	/*Функция переключает тему сайта, смена иконки по
 	логическому значению пременной f.*/
-	f = document.querySelector("*").classList.toggle("light");
-	if(f){prim.src = "./img/dark.png"}
-	else{prim.src = "./img/light.png"}
+	document.querySelector("*").classList.toggle("light") ? prim.src = "./img/dark.png" : prim.src = "./img/light.png"
 }
 
 function ctn(x){return 1/Math.tan(x)}//Вычисление котангенса
+
 function factorial(n){
 	/*Рекурсивная функция вычисления факториала, получает на вход
 	число n, для которого высчитывается факториал.*/

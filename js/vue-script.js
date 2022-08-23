@@ -37,6 +37,10 @@ var prim = new Vue({
       Предназначена для отключения встроенного поведения, копирования
       содержимого поля и отображения соответствующего сообщения пользователю.*/
       event.preventDefault();
+      input = document.createElement("input");
+      input.classList.add("copyInput");
+      input.value = this.findText;
+      document.querySelector("#container").appendChild(input);
       navigator.clipboard.writeText(this.findText).then(() => {
         console.log("[Navigator]: clipboard write '" + this.findText + "' success")
       }, () => {
@@ -44,6 +48,7 @@ var prim = new Vue({
         cs = document.execCommand('copy');
         console.log("[Document]: clipboard write '" + cs + "'");
       });
+      input.remove();
       document.querySelector("#copy").style.bottom = "20px";
       document.querySelector("#copy").style.opacity = 0.75;
       setTimeout(function(){document.querySelector("#copy").style.opacity = 0}, 750);

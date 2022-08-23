@@ -28,7 +28,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
 	<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
-<body>
+<body unselectable="on" oncontextmenu="return false;">
 	<div id="container">
 		<div id="output">
 			<div id="switch"><img :src="src" alt="switch" id="swh"></div>
@@ -78,7 +78,6 @@
 			<div class="moreButton" id="ln" onclick="cnstAdd('ln(', 'Math.log(')">ln</div>
 		</div>
 		<div id="copy">Скопировано</div>
-		<input type="text" id="copyInput" v-model="findText">
 	</div>
 	<script src="./js/vue.js"></script>
 	<script data-cfasync="false" src="./js/waves.min.js"></script>

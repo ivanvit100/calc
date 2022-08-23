@@ -27,6 +27,11 @@ body{
 *, body{
 	scrollbar-width: thin;
 	scrollbar-color: #faaf00 $dark;
+	user-select: none;
+	-o-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 *::-webkit-scrollbar{
 	width: 12px;

@@ -63,6 +63,9 @@ function operatorAdd(operator, func){
 	if(f || last == ")"){
 		prim.output += operator;
     	prim.find += func;
+    }else if(operator == "-" && !(["+", "-", "*", "^", "/", "."].includes(last))){
+    	prim.output += operator;
+    	prim.find += func;
 	}else if(prim.output == "" && prim.findText != "true" && prim.findText!= "false" && !(prim.findText.slice(-1) == ".")){
 		prim.output = prim.findText + operator;
 		prim.find = prim.findText + func;
@@ -142,7 +145,7 @@ function Clear(){
 }
 function Ok(){
 	/*Вывод на экран ответа из дополнительной строки, очистка*/
-	if(prim.ansText != ""){
+	if(prim.ansText != "" || prim.ansText == false){
 		if(prim.ansText != "Error"){prim.output = String(prim.ansText)}
 		else{prim.output = ""}
 		prim.find = "";

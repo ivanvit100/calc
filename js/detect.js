@@ -4,10 +4,6 @@ Project: https://calc.ivanvit.ru
 GitHub: https://github.com/ivanvit100
 E-Mail: develope@ivanvit.ru */
 
-//Смена темы
-document.querySelector("#switch").onclick = function(){light()}
-//Показать/скрыть блок дополнительных математических клавиш
-document.querySelector("#more_hide").onclick = function(){more_hide()}
 document.addEventListener('keydown', function(event){
 	//Функция обнаружения нажатий клавиш физической клавиатуры
 	if(event.key >= 0 && event.key <= 9){

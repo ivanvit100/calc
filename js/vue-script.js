@@ -8,28 +8,36 @@ stop = "";
 
 var prim = new Vue({
 	el:'#container',
-  data:{
-    findText: '0',
-    ansText: '',
-    src: './img/light.png',
-    showOne: true,
-    width: 0,
-    find: '',
-    output: '',
+  data(){
+    return{
+      findText: '0',
+      ansText: '',
+      src: './img/light.png',
+      showOne: true,
+      width: 0,
+      find: '',
+      output: '',
+      classSwitch: true,
+    }
   },
   computed:{
+    arrow: function(){
+      /*Переменная, отвечающая за отображение блока #more_hide
+      на экранах, больших 700px.*/
+      return this.width < 700
+    },
     show: function(){
       /*Переменная, отвечающая за отображение элемента #common.
       True - если область просмотра больше 700px или #more_hide
       в режиме toCommon.*/
-      return this.width >= 700 || this.showOne ? true : false
+      return !(this.arrow) || this.showOne
     },
     pc: function(){
       /*Переменная, отвечающая за отображение элемента #more.
       True - если область просмотра больше 700px или #more_hide
       в режиме toMore.*/
-      return this.width >= 700 || !(this.showOne) ? true : false
-    }
+      return !(this.arrow) || !(this.showOne)
+    },
   },
   methods:{
     copyToClipboard: function(){
@@ -57,7 +65,7 @@ var prim = new Vue({
     resize: function(){
       /*Функция, обновляющая вывод и значение переменной width
       при изменении ширины экрана.*/
-      this.width = window.innerWidth;
+      this.width = document.querySelector("#container").clientWidth;
       this.outputGo();
     },
     outputGo: function(){
@@ -90,7 +98,7 @@ var prim = new Vue({
           this.output = this.output + "…";
           this.outputGo();
           this.output = "";
-        }else{console.warn("Ошибка!")}
+        }else{console.warn("[ansGo]: Ошибка!")}
       }
     },
     blink: function(){
@@ -98,6 +106,18 @@ var prim = new Vue({
       при нажатии кнопок посредством временного удаления класса элемента.*/
       document.querySelector("#find").classList.remove("blink");
       intervalID = setTimeout(function(){document.querySelector("#find").classList.add("blink")}, 200);
+    },
+    moreHide: function(){
+      /*Функция переключения статуса страницы,
+      необходима для отображения дополнительных
+      математических клавиш в мобильной версии приложения.*/
+      this.classSwitch = !(this.classSwitch);
+      this.showOne = !(this.showOne);
+    },
+    light: function(){
+      /*Функция переключает тему сайта, смена иконки по
+      логическому значению пременной f.*/
+      document.querySelector("*").classList.toggle("light") ? this.src = "./img/dark.png" : this.src = "./img/light.png";
     }
   },
   created(){

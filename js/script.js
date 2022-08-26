@@ -76,7 +76,7 @@ function operatorAdd(operator, func){
 		prim.output = prim.output.substring(0, prim.output.length - 1) + operator;
 		prim.find = prim.find.substring(0, prim.find.length - 2) + func;
 	}else if(last == "("){
-		console.warn("Ошибка")
+		console.warn("[operatorAdd]: Ошибка!")
 	}else{
 		prim.output = prim.output.substring(0, prim.output.length - 1) + operator;
 		prim.find = prim.find.substring(0, prim.find.length - 1) + func;
@@ -110,7 +110,7 @@ function Zero(){
 	try{chk = Number.isInteger(eval(prim.output.slice(-1)))}
 	catch(c){chk = false}
 	if(chk || prim.output.slice(-1) == "."){numAdd("0")}
-	else if(["e", "π"].includes(prim.output.slice(-1)) || prim.output.slice(-1) == ")"){console.warn("Ошибка")}
+	else if(["e", "π"].includes(prim.output.slice(-1)) || prim.output.slice(-1) == ")"){console.warn("[Zero]: Ошибка")}
 	else{
 		prim.output += "0."; 
 		prim.find += "0.";
@@ -273,12 +273,6 @@ function fAdd(){
 	prim.outputGo();
 }
 
-function light(){
-	/*Функция переключает тему сайта, смена иконки по
-	логическому значению пременной f.*/
-	document.querySelector("*").classList.toggle("light") ? prim.src = "./img/dark.png" : prim.src = "./img/light.png"
-}
-
 function ctn(x){return 1/Math.tan(x)}//Вычисление котангенса
 
 function factorial(n){
@@ -286,12 +280,4 @@ function factorial(n){
 	число n, для которого высчитывается факториал.*/
 	try{return (n != 1) ? n * factorial(n - 1) : 1}	
 	catch(e){return "Error"}
-}
-
-function more_hide(){
-	/*Функция переключения статуса страницы,
-	необходима для отображения дополнительных
-	математических клавиш в мобильной версии сайта.*/
-	cmn = document.querySelector("#arrow").classList.toggle("toMore");
-	document.querySelector("#arrow").classList.toggle("toCommon");
 }

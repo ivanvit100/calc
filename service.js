@@ -1,4 +1,4 @@
-let cache_name = "v2.20"; 
+let cache_name = "v2.21"; 
 
 const assets = [
   './index.html',
@@ -21,29 +21,30 @@ const assets = [
 ];
 
 self.addEventListener("install", event => {
-    console.log("[Service Worker]: Installing...");
-    event.waitUntil(
-        caches
-            .open(cache_name)
-            .then(cache => {
-                return cache.addAll(assets);
-            })
-            .catch(err => console.log(err))
-    );
+  console.log("[Service Worker]: Installing...");
+  event.waitUntil(
+    caches
+      .open(cache_name)
+      .then(cache => {
+        return cache.addAll(assets);
+      })
+      .catch(err => console.log(err))
+  );
 });
 
 self.addEventListener("fetch", event => {
-    if(event.request.url === "https://calc.ivanvit.ru/"){
-        event.respondWith(
-            fetch(event.request).catch(err =>
-                self.caches.open(cache_name).then(cache => cache.match("./index.html"))
-            )
-        );
-    }else{
-        event.respondWith(
-            fetch(event.request).catch(err =>
-                caches.match(event.request).then(response => response)
-            )
-        );
-    }
+  console.log("[Service Worker]: Cache version: " + cache_name);
+  if(event.request.url === "https://calc.ivanvit.ru/"){
+    event.respondWith(
+      fetch(event.request).catch(err =>
+        self.caches.open(cache_name).then(cache => cache.match("./index.html"))
+      )
+    );
+  }else{
+    event.respondWith(
+      fetch(event.request).catch(err =>
+        caches.match(event.request).then(response => response)
+      )
+    );
+  }
 });

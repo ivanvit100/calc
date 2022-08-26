@@ -30,12 +30,12 @@
 </head>
 <body unselectable="on" oncontextmenu="return false;">
 	<div id="container">
-		<div id="output">
-			<div id="switch"><img :src="src" alt="switch" id="swh"></div>
-			<span id="find" @dblclick="copyToClipboard">{{findText}}</span>
+		<div id="output" @dblclick="copyToClipboard">
+			<div id="switch"><img @click="light" :src="src" alt="switch" id="swh"></div>
+			<span id="find">{{findText}}</span>
 			<span id="ans">{{ansText}}</span>
 		</div>
-		<div id="more_hide" @click="showOne = !(showOne)"><img src="./img/arrow.png" alt="open" id="arrow" class="toCommon"></div>
+		<div id="more_hide" @click="moreHide" v-if="arrow"><img src="./img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
 		<div id="common" v-show="show">
 			<div class="button orange KeyC" onclick="Clear()">C</div>
 			<div class="button orange" id="sc" onclick="scAdd('(')">(</div>

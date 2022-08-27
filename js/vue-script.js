@@ -18,6 +18,7 @@ var prim = new Vue({
       find: '',
       output: '',
       classSwitch: true,
+      copyText: '0',
     }
   },
   computed:{
@@ -37,7 +38,7 @@ var prim = new Vue({
       True - если область просмотра больше 700px или #more_hide
       в режиме toMore.*/
       return !(this.arrow) || !(this.showOne)
-    },
+    }
   },
   methods:{
     copyToClipboard: function(){
@@ -47,10 +48,10 @@ var prim = new Vue({
       event.preventDefault();
       input = document.createElement("input");
       input.classList.add("copyInput");
-      input.value = this.findText;
+      input.value = this.copyText;
       document.querySelector("#container").appendChild(input);
-      navigator.clipboard.writeText(this.findText).then(() => {
-        console.log("[Navigator]: clipboard write '" + this.findText + "' success")
+      navigator.clipboard.writeText(this.copyText).then(() => {
+        console.log("[Navigator]: clipboard write '" + this.copyText + "' success")
       }, () => {
         document.querySelector("#copyInput").select();  
         cs = document.execCommand('copy');
@@ -76,7 +77,8 @@ var prim = new Vue({
       count = parseInt(document.querySelector("#find").clientWidth/45);
       if(this.output.slice(-1) == "…" && this.output.length > count){this.findText = this.output.substring(0, count - 2) + "…"}
       else{this.output.length > count ? this.findText = this.output.slice(-count) : this.findText = this.output}
-      this.output.length == 0 ? this.findText =  "0" : this.findText = this.findText
+      this.output.length == 0 ? this.findText =  "0" : this.findText = this.findText;
+      this.output != '' && this.output.slice(-1) != "…" ? this.copyText = this.output : this.copyText = this.copyText;
       this.ansGo();
       this.blink();
     },

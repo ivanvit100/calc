@@ -43,5 +43,5 @@ document.addEventListener('keydown', function(event){
 		el.click();
 		el.classList.add("hover");
 		intervalID = setTimeout(function(){el.classList.remove("hover")}, 200);
-	}catch(e){console.warn("Нет команды для клавиши: " + event.key + "/" + event.code)}
+	}catch(e){console.warn("[Keyboard]: Нет команды для клавиши: " + event.key + "/" + event.code)}
 });

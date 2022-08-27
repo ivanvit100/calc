@@ -142,6 +142,7 @@ function Clear(){
 	prim.output = prim.find = fact = "";
 	flag = true;
 	prim.outputGo();
+	prim.copyText = "0";
 }
 function Ok(){
 	/*Вывод на экран ответа из дополнительной строки, очистка*/

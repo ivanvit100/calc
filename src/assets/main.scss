@@ -11,7 +11,7 @@ E-Mail: develope@ivanvit.ru */
 @import "./animate.scss";
 
 html{
-	cursor: url(./select.png), auto;
+	cursor: url(./img/select.png), auto;
 	box-sizing: border-box;
 	font-family: 'Ubuntu', sans-serif;
 }
@@ -51,5 +51,5 @@ body{
 	background: rgba(116, 116, 116, 0.6);
 }
 .button, #output, #switch, #more_hide, #more > div{
-	cursor: url(./link.png), auto;
+	cursor: url(./img/link.png), auto;
 }

@@ -2,8 +2,8 @@
 <div id="container">
   <my-output :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
-  <my-main v-show="show" @updateP="update"></my-main>
-  <more v-if="pc"></more>
+  <my-main v-show="show" @updateP="update" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main"></my-main>
+  <more v-if="pc" @updateP="update" @opAdd="opAdd" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent"></more>
   <div id="copy">Скопировано</div>
 </div>
 </template>
@@ -28,6 +28,8 @@ export default{
       ent: false, //Была ли вызвана функция Ok()
       copyText: '0', //Копируемый текст
       count: 0, //Количество символов, выодимых на экран
+      flag: true, //
+      fact: '', //
     }
   },
   computed:{
@@ -55,12 +57,19 @@ export default{
       Получает на вход переменные дочернего компонента,
       обновляет значени локальных переменных, после чего
       вызывает метод,обновляющий значения на экране.*/
-      this.output = data.prim;
-      this.find = data.ans;
-      this.copyText = data.copy;
+      this.output = data.output;
+      this.find = data.find;
+      this.copyText = data.copyText;
       this.ent = data.ent;
-      this.outputGo();
+      this.fact = data.fact;
+      this.flag = data.flag;
+      if(!data.out){this.outputGo()}
     },
+    opAdd: function(data){
+      /*Функция вызова метода operatorAdd из других компонентов*/
+      this.$refs.main.operatorAdd(data.operator, data.func);
+    },
+
     resize: function(){
       /*Функция, обновляющая вывод и значение переменной width
       при изменении ширины экрана.*/
@@ -97,7 +106,6 @@ export default{
       Пример: 0.3 - 0.2 = 0.0999...*/
       if(this.find.length == 0){this.ansText =  ""}
       try{
-        this.count = parseInt(document.querySelector("#find").clientWidth/45) + 3;
         eval(this.find).toString().length > this.count + 3 ? stop = eval(this.find).toString().substring(0, this.count + 2) : stop = eval(this.find);
         [Infinity, NaN].includes(stop) ? this.ansText = "Error" : this.ansText = stop;
       }catch(e){
@@ -129,7 +137,6 @@ export default{
       };
       //Эффект волн при нажатии
       Waves.attach('#output', ['waves-block', 'waves-classic']);
-      Waves.attach('.moreButton', ['waves-block', 'waves-classic']);
       Waves.init(config);
       //Отключение контекстного меню
       document.oncontextmenu = function(){return false};

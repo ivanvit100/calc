@@ -27,30 +27,32 @@
 <script>
 export default{
 	name: 'myMain',
+	props: ['copyText', 'output', 'find', 'ent', 'fact', 'flag'],
 	data(){
 		return{
-      		find: '', //Хранилище ответа
-			output: '', //Хранилище примера
-			fact: "", //Число для вычисления факториала
-			copy: "0", //Копируемый текст
-			flag: true, //Была ли добавлена плавающая точка
-			ent: false, //Был ли нажат Enter
 			chk: false, //Вспомогательная переменная
+			out: false, //Выводить ли ответ
 		}
 	},
 	computed:{
 		last: function(){
 			return this.find.slice(-1)
+		},
+		last4: function(){
+			return this.output.slice(-4)
 		}
 	},
 	methods:{
 		updateParent: function(){
 			/*Функция обновления родитльских данных вывода.*/
 			this.$emit('updateP', {
-				prim: this.output,
-				ans: this.find,
-				copy: this.copy,
-				ent: this.ent
+				output: this.output,
+				find: this.find,
+				copyText: this.copyText,
+				ent: this.ent,
+				fact: this.fact,
+				flag: this.flag,
+				out: this.out
 			});
 		},
 
@@ -64,6 +66,7 @@ export default{
 				this.output += num;
    				this.find += num;
    				this.fact += num
+    			this.out = false; 
     			this.updateParent();
 			}
 		},
@@ -78,7 +81,7 @@ export default{
 				this.output += "0."; 
 				this.find += "0.";
 				this.fact += "0.";
-				this.flag = false;
+				this.flag = this.out = false;
 				this.updateParent();
 			}
 		},
@@ -95,6 +98,7 @@ export default{
 				this.output += "0."; 
 				this.find += "0.";
 				this.fact += "0.";
+				this.out = false; 
 				this.updateParent();
 			}
 			this.flag = false;
@@ -111,7 +115,7 @@ export default{
 			if(this.chk || this.last == ")"){
 				this.output += operator;
     			this.find += func;
-    		}else if(operator == "-" && !(["+", "-", "*", "^", "/", "."].includes(this.last))){
+    		}else if(operator != "-" && !(["+", "-", "*", "^", "/", "."].includes(this.last))){
     			this.output += operator;
     			this.find += func;
 			}else if(this.output == "" && this.findText != "true" && this.findText!= "false" && !(this.findText.slice(-1) == ".")){
@@ -130,6 +134,7 @@ export default{
 				this.find = this.find.substring(0, this.find.length - 1) + func;
 			}
 			if(func != "."){this.fact = ""}
+			this.out = false; 
 			this.updateParent();
 		},
 		scAdd: function(input){
@@ -147,27 +152,111 @@ export default{
 				this.output += input;
 				this.find += input;
 			}
+			this.out = false; 
 			this.updateParent();
 			this.fact = "";
 			this.flag = true;
 		},
 		Clear: function(){
 			/*Очистка экрана*/
-			this.output = this.find = this.fact = "";
+			this.find = this.fact = "";
 			this.flag = true;
-			this.copy = "0";
+			this.copy = this.output = "0";
+			this.out = false; 
 			this.updateParent();
 		},
 		Ok: function(){
 			/*Вывод на экран ответа из дополнительной строки, очистка*/
-			if(this.find != "" || this.find == false){
-				if(this.find != "Error"){this.output = String(eval(this.find))}
+			if(this.find != "" || document.querySelector("#ans").innerText == false){
+				if(document.querySelector("#ans").innerText != "Error"){this.output = String(eval(this.find))}
 				else{this.output = ""}
 				this.find = "";
 				this.ent = this.flag = true;
+				this.out = false; 
 				this.updateParent();
+				this.out = true;
+				this.ent = false;
 				this.fact = this.output = "";
+				this.updateParent();
 			}
+		},
+		findDEL: function(){
+			/*Вспомогательная функция для функции Del(),
+			осуществляющая удаление элементов сложных чисел в поле ответа.*/
+			console.log("TEST");
+			while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.find.slice(-1))){
+				this.find = this.find.substring(0, this.find.length - 1);
+			}
+		},
+		Del: function(){
+			/*Issue: требуется рефакторинг*/
+			this.flag = true;
+			if(["!"].includes(this.output.slice(-1))){
+				/*Если удаляется факториал: 
+				1. Удаляется его числовое значениеиз переменной find 
+				(в том числе большие числа вида a.b...e+... ,
+				где e - константа, a и b - целые числа).
+				2. Последовательной проверкой каждого символа строки ввода
+				(справа налево) на принадлежность его к массиву целых чисел 
+				находится и вносится в переменную значение исходного числа.
+				3.Обновляются все связанные переменные.*/
+				this.findDEL();
+				if(this.find.slice(-2) == "e+"){
+					this.find = this.find.substring(0, this.find.length - 2);
+					this.findDEL();
+					if(this.last == "."){
+						this.find = this.find.substring(0, this.find.length - 1);
+						this.findDEL();
+					}
+				}
+				let n = 0;
+				let nm = "";
+				this.output = this.output.substring(0, this.output.length - 1);
+				while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.output.substring(this.output.length - 1 - n, this.output.length - n))){
+					nm = this.output.substring(this.output.length - 1 - n, this.output.length - n) + nm;
+					n += 1;
+				}
+				this.output = this.output + "!";
+				this.find += nm;
+				this.fact = nm;
+			/*В последующих условиях удаляется необходимое количество символов
+			из переменных find и output в соответствии с удаляемой функцией.
+			Также обновляется значение переменной flag.*/
+			}else if(this.output.slice(-1) == "π" || this.output.slice(-1) == "e"){
+				this.find = this.find.substring(0, this.find.length - 17);
+			}else if(this.last in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]){
+				this.flag = false;
+				this.find = this.find.substring(0, this.find.length - 1);
+				this.fact = this.fact.substring(0, this.fact.length - 1);
+			}else if(this.last == "="){
+				this.find = this.find.substring(0, this.find.length - 2);
+			}else if(["sin(", "cos(", "tan("].includes(this.last4)){
+				this.find = this.find.substring(0, this.find.length - 9);
+				this.output = this.output.substring(0, this.output.length - 3);
+			}else if(["log("].includes(this.last4)){
+				this.find = this.find.substring(0, this.find.length - 11);
+				this.output = this.output.substring(0, this.output.length - 3);
+			}else if(["ln("].includes(this.output.slice(-3))){
+				this.find = this.find.substring(0, this.find.length - 9);
+				this.output = this.output.substring(0, this.output.length - 2);
+			}else if(["ctn("].includes(this.output.slice(-4))){
+				this.find = this.find.substring(0, this.find.length - 4);
+				this.output = this.output.substring(0, this.output.length - 3);
+			}else if(["√("].includes(this.output.slice(-2))){
+				this.find = this.find.substring(0, this.find.length - 10);
+				this.output = this.output.substring(0, this.output.length - 1);
+			}else if(["^"].includes(this.output.slice(-1))){
+				this.find = this.find.substring(0, this.find.length - 2);
+			}else{
+				this.find = this.find.substring(0, this.find.length - 1);
+			}
+			if(this.output.slice(-2) == "0."){
+				this.find = this.find.substring(0, this.find.length - 1);
+				this.output = this.output.substring(0, this.output.length - 1);
+			}
+			this.output = this.output.substring(0, this.output.length - 1);
+			this.out = false; 
+			this.updateParent();
 		},
 	}
 }

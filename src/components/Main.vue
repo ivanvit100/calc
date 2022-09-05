@@ -27,7 +27,7 @@
 <script>
 export default{
 	name: 'myMain',
-	props: ['copyText', 'output', 'find', 'ent', 'fact', 'flag'],
+	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag'],
 	data(){
 		return{
 			chk: false, //Вспомогательная переменная
@@ -106,36 +106,40 @@ export default{
 		operatorAdd: function(operator, func){
 			/*Функция получает на вход математический оператор, выводимый на экран,
 			и его вычисляемый аналог для подстановки в find*/
-			this.flag = true;
 			try{this.chk = Number.isInteger(eval(this.last))}catch(c){this.chk = false}
 			/*Оператор выводится на экран, если перед ним стояло число,
 			в противном случае оператор может заменять собой
-			предыдущий.
-			Issue: требуется рефакторинг*/
+			предыдущий.*/
 			if(this.chk || this.last == ")"){
 				this.output += operator;
     			this.find += func;
-    		}else if(operator != "-" && !(["+", "-", "*", "^", "/", "."].includes(this.last))){
-    			this.output += operator;
-    			this.find += func;
-			}else if(this.output == "" && this.findText != "true" && this.findText!= "false" && !(this.findText.slice(-1) == ".")){
-				this.output = this.findText + operator;
-				this.find = this.findText + func;
-			}else if(this.output == ""){
-				this.output = "0" + operator;
-				this.find = "0" + func;
-			}else if(["="].includes(this.last)){
+    		}else if(this.find == "" && this.findText == "0" && operator == "-"){
+    			this.find = this.output = "-";
+    		}else if(this.find == "" && this.findText == "0"){
+    			this.output = "0" + operator;
+    			this.find = "0" + func;
+    		}else if(this.find == ""){
+    			this.output = this.findText + operator;
+    			this.find = this.findText + func;
+    		}else if(this.last == "="){
 				this.output = this.output.substring(0, this.output.length - 1) + operator;
 				this.find = this.find.substring(0, this.find.length - 2) + func;
 			}else if(this.last == "("){
 				console.warn("[operatorAdd]: Ошибка!")
-			}else{
-				this.output = this.output.substring(0, this.output.length - 1) + operator;
+			}else if(!(["+", "-", "*", "^", "/", "."].includes(this.last)) || (operator == "." && this.flag)){
+    			this.output += operator;
+    			this.find += func;
+    		}else if(["+", "-", "*", "^", "/", "."].includes(this.last) && this.findText != "-"){
+    			this.output = this.output.substring(0, this.output.length - 1) + operator;
 				this.find = this.find.substring(0, this.find.length - 1) + func;
-			}
-			if(func != "."){this.fact = ""}
-			this.out = false; 
-			this.updateParent();
+    		}else if(["+", "-", "*", "^", "/", "."].includes(this.last)){
+    			this.output = "0" + operator;
+    			this.find = "0" + func;
+    		}
+    		operator == "." ? this.flag = false : this.flag = true;
+    		if(func != "."){this.fact = ""}
+			this.out = false;
+    		this.updateParent();
 		},
 		scAdd: function(input){
 			/*Функция получает на вход символ скобки "(" или ")"*/

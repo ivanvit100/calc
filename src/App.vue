@@ -2,7 +2,7 @@
 <div id="container">
   <my-output :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
-  <my-main v-show="show" @updateP="update" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main"></my-main>
+  <my-main v-show="show" @updateP="update" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main"></my-main>
   <more v-if="pc" @updateP="update" @opAdd="opAdd" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent"></more>
   <div id="copy">Скопировано</div>
 </div>

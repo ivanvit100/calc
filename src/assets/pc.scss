@@ -4,8 +4,9 @@ Project: https://calc.ivanvit.ru
 GitHub: https://github.com/ivanvit100
 E-Mail: develope@ivanvit.ru */
 
-@media(min-width: 700px){
-	#container{
+#container.pc{
+	#calc{
+		width: 100%;
 		display: grid !important;
 		grid-template-columns: 50% 50% !important;
 	}

@@ -115,7 +115,7 @@ export default{
     			this.find += func;
     		}else if(this.find == "" && this.findText == "0" && operator == "-"){
     			this.find = this.output = "-";
-    		}else if(this.find == "" && this.findText == "0"){
+    		}else if(this.find == "" && (this.findText == "0" || this.findText == "false" || this.findText == "true")){
     			this.output = "0" + operator;
     			this.find = "0" + func;
     		}else if(this.find == ""){

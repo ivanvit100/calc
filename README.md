@@ -1,4 +1,4 @@
-![preview](https://calc.ivanvit.ru/img/preview.png)
+![preview](https://calc.ivanvit.ru/static/preview.png)
 # Functionally WEB-based calculator
 Used technologies: JS, CSS, SCSS, Vue.js, Html
 
@@ -20,24 +20,39 @@ You may find this on the [site](https://calc.ivanvit.ru)
 ## Build Setup
 
 ``` bash
-# install dependencies
+# Install vue-cli 
+npm install 
+
+# Create vue-cli project
+vue 
+
+# Install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# Copy repository
+
+# Serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
+# Build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
+# Build for production and view the bundle analyzer report
 npm run build --report
 
-# run unit tests
+# Run unit tests
 npm run unit
 
-# run e2e tests
+# Run e2e tests
 npm run e2e
 
-# run all tests
+# Run all tests
 npm test
+
+# Push main branch
+git push
+
+# Push for the GitHub Pages
+git add -f dist && git commit -m "Commit name"
+git subtree push --prefix=dist origin gh-pages
 ```

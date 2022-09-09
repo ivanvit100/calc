@@ -10,8 +10,10 @@ export default{
 	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag'],
 	data(){
 		return{
-			val1: "rub", //Значение валюты: вход
-			val2: "dol", //Значение валюты: выход
+			val1: "RUB", //Значение валюты: вход
+			val2: "USD", //Значение валюты: выход
+			key: "{key}", //Ключ для обращения к API
+			url: "https://api.getgeoapi.com/v2/currency/list?api_key=${this.key}&format=json", //URL API
 		}
 	},
 	methods:{
@@ -27,6 +29,14 @@ export default{
 				out: this.out
 			});
 		},
+	},
+	mounted(){
+    	this.$nextTick(function(){
+    		console.log(this.url);
+    		fetch(this.url)
+    			.then(response => response.json())
+    			.then(data => console.log(data));
+    	})
 	}
 }
 </script>

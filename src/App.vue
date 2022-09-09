@@ -1,5 +1,6 @@
 <template>
 <div id="container">
+  <button @click="mode = !mode"></button>
   <my-output :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="calc" v-if="mode">
     <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>

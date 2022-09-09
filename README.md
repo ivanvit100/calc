@@ -15,21 +15,28 @@ You may find this on the [site](https://calc.ivanvit.ru)
 
 ## Plans
 1. Create programming calculator
-2. Converter
+2. Currency converter
+
+## Technologies
+1. Vue.js
+2. SCSS
+3. PWA
+4. Fetch API
 
 ## Build Setup
 
 ``` bash
 # Install vue-cli 
-npm install 
+npm install --location=global vue-cli
 
 # Create vue-cli project
-vue 
+vue init pwa calc
 
 # Install dependencies
 npm install
 
 # Copy repository
+git clone https://github.com/ivanvit100/calc
 
 # Serve with hot reload at localhost:8080
 npm run dev
@@ -55,4 +62,4 @@ git push
 # Push for the GitHub Pages
 git add -f dist && git commit -m "Commit name"
 git subtree push --prefix=dist origin gh-pages
-```
+``

@@ -1,6 +1,5 @@
 ![preview](https://calc.ivanvit.ru/static/preview.png)
 # Functionally WEB-based calculator
-Used technologies: JS, CSS, SCSS, Vue.js, Html
 
 ---
 

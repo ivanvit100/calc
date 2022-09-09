@@ -1,13 +1,12 @@
 <template>
 <div id="container">
-  <button @click="mode = !mode"></button>
-  <my-output :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
+  <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="calc" v-if="mode">
     <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
     <my-main v-show="show" @updateP="update" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main"></my-main>
     <more v-if="pc" @updateP="update" @opAdd="opAdd" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent"></more>
   </div>
-  <converter v-else @updateP="update" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent"></converter>
+  <converter v-else @updateP="update" @updateT="updateTotal" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" :total="total"></converter>
   <div id="copy">Скопировано</div>
 </div>
 </template>
@@ -36,6 +35,7 @@ export default{
       flag: true, //Целое ли число
       fact: '', //Число для вычисления факториала
       mode: true, //Режим работы приложения
+      total: 0, //Курс выбранных валют
     }
   },
   computed:{
@@ -70,6 +70,14 @@ export default{
       this.fact = data.fact;
       this.flag = data.flag;
       if(!data.out){this.outputGo()}
+    },
+    updateTotal: function(data){
+      /*Функция обновления курса валют*/
+      this.total = data.total;
+    },
+    updateMode: function(data){
+      /*Функция, переключающая режим работы приложения*/
+      this.mode = data.mode;
     },
     opAdd: function(data){
       /*Функция вызова метода operatorAdd из других компонентов*/

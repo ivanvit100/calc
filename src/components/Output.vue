@@ -4,6 +4,10 @@
 		<img v-if="dark" @click="light" src="@/assets/img/light.png" alt="switch" class="swh">
 		<img v-else @click="light" src="@/assets/img/dark.png" alt="switch" class="swh">
 	</div>
+	<div id="mode">
+		<img @click="mode(true)" src="@/assets/img/light.png" alt="calculator" id="calcButton">
+		<img @click="mode(false)" src="@/assets/img/light.png" alt="currecy" id="currencyButton">
+	</div>
 	<span id="find" class="blink">{{findText}}</span>
 	<span id="ans">{{ansText}}</span>
 </div>
@@ -19,6 +23,12 @@ export default{
     	}
     },
 	methods:{
+		mode: function(m){
+			/*Функция, переключающая режим работы приложения*/
+			this.$emit('updateMode', {
+				mode: m,
+			});
+		},
 		copyToClipboard: function(){
 			/*Функция вызывается при двойном клике на окно отображения примера.
 			Предназначена для отключения встроенного поведения, копирования

@@ -2,18 +2,14 @@
 <template>
 <div id="converterKeyboard">
 	<div id="currencyChange">
-		<input type="text" id="in">
-		<input type="text" id="out">
+		<select name="Из валюты" id="in">
+			<option v-for="item in currency" value="{{item.name}}">{{item.fullname}}</option>
+		</select>
+		<select name="В валюту" id="out">
+			<option v-for="item in currency" value="{{item.name}}">{{item.fullname}}</option>
+		</select>
 	</div>
-	<div class="button num7" @click="numAdd('7')">7</div>
-	<div class="button num8" @click="numAdd('8')">8</div>
-	<div class="button num9" @click="numAdd('9')">9</div>
-	<div class="button num4" @click="numAdd('4')">4</div>
-	<div class="button num5" @click="numAdd('5')">5</div>
-	<div class="button num6" @click="numAdd('6')">6</div>
-	<div class="button num1" @click="numAdd('1')">1</div>
-	<div class="button num2" @click="numAdd('2')">2</div>
-	<div class="button num3" @click="numAdd('3')">3</div>
+	<div v-for="item in buttons" class="button num{{item}}" @click="numAdd(item)">{{item}}</div>
 	<div class="button num0" @click="Zero()">0</div>
 	<div class="button Period Comma NumpadDecimal" @click="Dot()">.</div>
 	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.png" alt="del" id="del"></div>
@@ -29,14 +25,17 @@ export default{
 			val1: "USD", //Значение валюты: вход
 			val2: "RUB", //Значение валюты: выход
 			key: "9116ea120a47ab05aa695a9c3199d1437def2d53", //Ключ для обращения к API
-			currency: ['RUB', 'USD', 'EUR', 'BRL', 'ISK', 'JPY', 'KZT', 'KGS', 'BYN', 'CAD', 'UAH', 'CNY'], //Список идентификаторов валют
-			names: ['Рубль', 'Доллар', 'Евро', 'Реал', 'Крона', 'Иена', 'Тенге', 'Сом', 'Белорусский рубль', 'Канадский доллар', 'Гривна', 'Юань'], //Список именований валют
+			buttons: ["7", "8", "9", "4", "5", "6", "1", "2", "3"], //Кнопки
 		}
 	},
 	computed:{
     	url: function(){
     		/*Переменная, хранящая URL, необходимый для доступа к API*/
     		return "https://api.getgeoapi.com/v2/currency/convert?api_key=" + this.key + "&from=" + this.val1 + "&to=" + this.val2 + "&amount=1&format=json"
+    	},
+    	currency: function(){
+    		/**/
+    		return JSON.parse(curData)
     	}
 	},
 	methods:{

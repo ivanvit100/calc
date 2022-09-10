@@ -1,0 +1,57 @@
+curData = currency: [
+	{
+		"name": "RUB",
+		"fullname": "Рубль",
+		"mark": ""
+	},
+	{
+		"name": "USD",
+		"fullname": "Доллар",
+		"mark": ""
+	},
+	{
+		"name": "EUR",
+		"fullname": "Евро",
+		"mark": ""
+	},
+	{
+		"name": "BRL",
+		"fullname": "Реал",
+		"mark": ""
+	},
+	{
+		"name": "ISK",
+		"fullname": "Крона",
+		"mark": ""
+	},
+	{
+		"name": "JPY",
+		"fullname": "Иена",
+		"mark": ""
+	},
+	{
+		"name": "KZT",
+		"fullname": "Тенге",
+		"mark": ""
+	},
+	{
+		"name": "CNY",
+		"fullname": "Юань",
+		"mark": ""
+	},
+	{
+		"name": "UAH",
+		"fullname": "Гривна",
+		"mark": ""
+	},
+	{
+		"name": "BYN",
+		"fullname": "Белорусский рубль",
+		"mark": ""
+	},
+	{
+		"name": "CAD",
+		"fullname": "Канадский доллар",
+		"mark": ""
+	},
+]

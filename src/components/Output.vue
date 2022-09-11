@@ -5,8 +5,8 @@
 		<img v-else @click="light" src="@/assets/img/dark.png" alt="switch" class="swh">
 	</div>
 	<div id="mode">
-		<img @click="mode(true)" src="@/assets/img/light.png" alt="calculator" id="calcButton">
-		<img @click="mode(false)" src="@/assets/img/light.png" alt="currecy" id="currencyButton">
+		<img :class="{act: act}" @click="mode(true)" src="@/assets/img/calc.svg" alt="calculator" id="calcButton">
+		<img :class="{act: !act}" @click="mode(false)" src="@/assets/img/usd.svg" alt="currecy" id="currencyButton">
 	</div>
 	<span id="find" class="blink">{{findText}}</span>
 	<span id="ans">{{ansText}}</span>
@@ -20,11 +20,13 @@ export default{
 	data(){
     	return{
     		dark: true,
+    		act: true,
     	}
     },
 	methods:{
 		mode: function(m){
 			/*Функция, переключающая режим работы приложения*/
+			this.act = m;
 			this.$emit('updateMode', {
 				mode: m,
 			});

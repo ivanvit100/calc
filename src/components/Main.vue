@@ -262,6 +262,15 @@ export default{
 			this.out = false; 
 			this.updateParent();
 		},
+	},
+	mounted(){
+    	this.$nextTick(function(){
+    		this.find = this.fact = "";
+    		this.ent = false;
+    		this.flag = true;
+    		this.copyText = this.output = "0";
+    		this.updateParent();
+    	})
 	}
 }
 </script>

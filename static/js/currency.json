@@ -1,4 +1,4 @@
-curData = currency: [
+curData = [
 	{
 		"name": "RUB",
 		"fullname": "Рубль",

@@ -129,8 +129,11 @@ E-Mail: develope@ivanvit.ru */
 	top: 4px;
 	height: 60%;
 	margin-left: 25px;
-	filter: invert(100%);
 	transition: transform .2s;
+}
+#calcButton, #currencyButton, #arrow{
+	filter: invert(100%);
+	transition: height .15s;
 }
 .toMore{
 	transform: rotate(0deg);
@@ -144,17 +147,44 @@ E-Mail: develope@ivanvit.ru */
 	left: -200px;
 }
 #converterKeyboard{
-	display: grid;
-	grid-template-columns: 33% 33% 33%;
-	grid-template-rows: 35px 75px 75px 75px 75px;
-	padding: auto;
 	align-items: center;
+	box-shadow: 0px 30px 8px -4px rgba(0,0,0,0.32) inset;
 }
 #currencyChange{
 	grid-column: 1 / 4;
 	align-self: start;
-	width: 100vw;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 #mode{
 	top: 130px;
+	left: 27px;
+}
+.act{
+	height: 28px !important;
+}
+select{
+	appearance: none;
+	font-size: 15px;
+	border: 0;
+	outline: 0;
+	height: 100%;
+	padding: 0 4em 0 1em;
+	background: url(./img/selectArrow.svg)
+	no-repeat right 0.8em center / 1.4em,
+	linear-gradient(to left, $glass 3em, $glass 3em);
+	color: white;
+	border-radius: 0.25em;
+	option{
+		color: inherit;
+		background-color: $option;
+	}
+	&:focus{
+		outline: none;
+	}
+	&::-ms-expand{
+		display: none;
+	}
 }

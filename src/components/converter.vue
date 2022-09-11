@@ -2,30 +2,35 @@
 <template>
 <div id="converterKeyboard">
 	<div id="currencyChange">
-		<select name="Из валюты" id="in">
-			<option v-for="item in currency" value="{{item.name}}">{{item.fullname}}</option>
+		<select v-model="val1" id="in">
+			<option disabled value="" selected>Конвертировать из</option>
+			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}</option>
 		</select>
-		<select name="В валюту" id="out">
-			<option v-for="item in currency" value="{{item.name}}">{{item.fullname}}</option>
+		<select v-model="val2" id="out">
+			<option disabled value="" selected>Конвертировать в</option>
+			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}</option>
 		</select>
 	</div>
-	<div v-for="item in buttons" class="button num{{item}}" @click="numAdd(item)">{{item}}</div>
+	<my-main @updateP="updateP" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main" style="margin: auto; grid-column: 1/4;"></my-main>
+	<!--<div v-for="item in buttons" class="button" :class="item" @click="numAdd(item.slice(-1))">{{item.slice(-1)}}</div>
 	<div class="button num0" @click="Zero()">0</div>
 	<div class="button Period Comma NumpadDecimal" @click="Dot()">.</div>
-	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.png" alt="del" id="del"></div>
+	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.png" alt="del" id="del"></div>-->
 </div>
 </template>
 
 <script>
+import myMain from './Main.vue';
 export default{
-	name: 'myMain',
+	name: 'converter',
+	components: {myMain},
 	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag', 'total'],
 	data(){
 		return{
-			val1: "USD", //Значение валюты: вход
-			val2: "RUB", //Значение валюты: выход
+			val1: 0, //Значение валюты: вход
+			val2: 0, //Значение валюты: выход
 			key: "9116ea120a47ab05aa695a9c3199d1437def2d53", //Ключ для обращения к API
-			buttons: ["7", "8", "9", "4", "5", "6", "1", "2", "3"], //Кнопки
+			buttons: ["num7", "num8", "num9", "num4", "num5", "num6", "num1", "num2", "num3"], //Кнопки
 		}
 	},
 	computed:{
@@ -34,10 +39,22 @@ export default{
     		return "https://api.getgeoapi.com/v2/currency/convert?api_key=" + this.key + "&from=" + this.val1 + "&to=" + this.val2 + "&amount=1&format=json"
     	},
     	currency: function(){
-    		/**/
-    		return JSON.parse(curData)
+    		/*Получение валют*/
+    		return curData
     	}
-	},
+   	},
+   	watch:{
+   		val1(newVal, oldVal){
+   			if(newVal != oldVal && this.val2 != 0){
+   				this.apiGo()
+   			}
+   		},
+   		val2(newVal, oldVal){
+   			if(newVal != oldVal && this.val1 != 0){
+   				this.apiGo()
+   			}
+   		},
+   	},
 	methods:{
 		updateParent: function(){
 			/*Функция обновления родитльских данных вывода.*/
@@ -48,29 +65,33 @@ export default{
 				ent: this.ent,
 				fact: this.fact,
 				flag: this.flag,
-				out: this.out
 			});
+		},
+		updateP: function(data){
+			this.output = data.ouput;
+			this.ent = data.ent;
+			this.flag = data.flag;
+			this.fact = data.fact;
+			try{
+				this.find = eval(data.find) * this.total;
+				this.copyText = this.find;
+			}catch(e){console.log("[converterFromMain]: Ошибка!")}
+			this.updateParent();
 		},
 		updateTotal: function(total){
 			/*Функция обновления курса выбранных валют*/
-			console.log(total);
 			this.$emit('updateT', {
 				total: total,
 			});
 		},
-	},
-	mounted(){
-    	this.$nextTick(function(){
-    		let val = this.val2;
-    		if(this.total == 0){
-    			fetch(this.url)
-    				.then(response => response.json())
-    				.then(data => {
-    					this.updateTotal(data['rates'][val]['rate']);
-    				})
-    				.catch(error => console.error(error));
-    		}
-    	})
+		apiGo: function(){
+    		fetch(this.url)
+    			.then(response => response.json())
+    			.then(data => {
+    				this.updateTotal(data['rates'][this.val2]['rate']);
+    			})
+    			.catch(error => console.warn("[apiGo]: Ошибка!"));
+		},
 	}
 }
 </script>

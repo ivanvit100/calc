@@ -6,6 +6,7 @@
 			<option disabled value="" selected>Конвертировать из</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}</option>
 		</select>
+		<img @click="swap" src="@/assets/img/doubleArrow.png" alt="swap" id="doubleArrow">
 		<select v-model="val2" id="out">
 			<option disabled value="" selected>Конвертировать в</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}</option>
@@ -91,6 +92,18 @@ export default{
     				this.updateTotal(data['rates'][this.val2]['rate']);
     			})
     			.catch(error => console.warn("[apiGo]: Ошибка!"));
+		},
+		swap: function(){
+			/*Функция, меняющая конвертируемые валюты местами*/
+			let change = this.val1;
+			this.val1 = this.val2;
+			this.val2 = change;
+			let doubleArrow = document.querySelector("#doubleArrow");
+			for(var i = 1; i <= 360; i++){
+				setInterval(function(){
+					doubleArrow.style.transform = "rotate(" + i + "deg)";
+				}, 20)
+			}
 		},
 	}
 }

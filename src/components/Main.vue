@@ -94,14 +94,19 @@ export default{
 				this.operatorAdd(".", ".");
 				this.fact += ".";
 			}
+			else if(this.flag && this.find == "" && this.output == "0"){
+				this.output += ".";
+				this.find += "0.";
+				this.copyText = this.output;
+			}
 			else if(this.flag && (this.output.slice(-1) != ")") && !(["e", "π"].includes(this.output.slice(-1)))){
 				this.output += "0."; 
 				this.find += "0.";
 				this.fact += "0.";
 				this.out = false; 
-				this.updateParent();
 			}
-			this.flag = false;
+			this.flag = this.last == ".";
+			this.updateParent();
 		},
 		operatorAdd: function(operator, func){
 			/*Функция получает на вход математический оператор, выводимый на экран,
@@ -187,7 +192,6 @@ export default{
 		findDEL: function(){
 			/*Вспомогательная функция для функции Del(),
 			осуществляющая удаление элементов сложных чисел в поле ответа.*/
-			console.log("TEST");
 			while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.find.slice(-1))){
 				this.find = this.find.substring(0, this.find.length - 1);
 			}

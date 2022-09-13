@@ -9,7 +9,7 @@
 		<img @click="swap" src="@/assets/img/doubleArrow.png" alt="swap" id="doubleArrow">
 		<select v-model="val2" id="out">
 			<option disabled value="" selected>Конвертировать в</option>
-			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}</option>
+			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
 		</select>
 	</div>
 	<!--<div v-for="item in buttons" class="button" :class="item" @click="numAdd(item.slice(-1))">{{item.slice(-1)}}</div>

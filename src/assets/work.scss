@@ -156,7 +156,7 @@ E-Mail: develope@ivanvit.ru */
 	width: 100%;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-around;
 }
 #mode{
 	top: 130px;
@@ -171,6 +171,7 @@ select{
 	border: 0;
 	outline: 0;
 	height: 100%;
+	max-width: calc((100% - 25px) / 2);
 	padding: 0 4em 0 1em;
 	background: url(./img/selectArrow.svg)
 	no-repeat right 0.8em center / 1.4em,
@@ -190,4 +191,7 @@ select{
 }
 #doubleArrow{
 	height: 25px;
+	filter: invert(40%);
+	transform: rotate(0deg);
+	transition: transform .3s ease-in-out;
 }

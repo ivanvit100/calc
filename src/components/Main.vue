@@ -97,6 +97,7 @@ export default{
 			else if(this.flag && this.find == "" && this.output == "0"){
 				this.output += ".";
 				this.find += "0.";
+				this.fact += ".";
 				this.copyText = this.output;
 			}
 			else if(this.flag && (this.output.slice(-1) != ")") && !(["e", "π"].includes(this.output.slice(-1)))){
@@ -105,7 +106,7 @@ export default{
 				this.fact += "0.";
 				this.out = false; 
 			}
-			this.flag = this.last == ".";
+			this.flag = this.fact.indexOf(".") == -1;
 			this.updateParent();
 		},
 		operatorAdd: function(operator, func){
@@ -267,14 +268,5 @@ export default{
 			this.updateParent();
 		},
 	},
-	mounted(){
-    	this.$nextTick(function(){
-    		this.find = this.fact = "";
-    		this.ent = false;
-    		this.flag = true;
-    		this.copyText = this.output = "0";
-    		this.updateParent();
-    	})
-	}
 }
 </script>

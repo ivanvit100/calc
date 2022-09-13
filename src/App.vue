@@ -6,7 +6,10 @@
     <my-main v-show="show" @updateP="update" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main"></my-main>
     <more v-if="pc" @updateP="update" @opAdd="opAdd" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent"></more>
   </div>
-  <converter v-else @updateP="update" @updateT="updateTotal" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" :total="total"></converter>
+  <div v-else id="convCont">
+    <converter @updateVal="updateVal" @updateP="update" @updateT="updateTotal" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" :total="total" :val1="val1" :val2="val2"></converter>
+    <my-main @updateP="update" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main" style="margin: auto; grid-column: 1/4;"></my-main>
+  </div>
   <div id="copy">Скопировано</div>
 </div>
 </template>
@@ -36,6 +39,8 @@ export default{
       fact: '', //Число для вычисления факториала
       mode: true, //Режим работы приложения
       total: 0, //Курс выбранных валют
+      val1: "", //Валюта: вход
+      val2: "", //Валюта: выход
     }
   },
   computed:{
@@ -74,6 +79,11 @@ export default{
     updateTotal: function(data){
       /*Функция обновления курса валют*/
       this.total = data.total;
+    },
+    updateVal: function(data){
+      /*Функция обновления значений валют для двусторонней связи*/
+      this.val1 = data.val1;
+      this.val2 = data.val2;
     },
     updateMode: function(data){
       /*Функция, переключающая режим работы приложения*/
@@ -122,6 +132,9 @@ export default{
       try{
         eval(this.find).toString().length > this.count + 3 ? stop = eval(this.find).toString().substring(0, this.count + 2) : stop = eval(this.find);
         [Infinity, NaN].includes(stop) ? this.ansText = "Error" : this.ansText = stop;
+        if(this.total != 0 && !this.mode){
+          this.copyText = this.ansText = this.ansText * this.total;
+        }
       }catch(e){
         if(this.ent && this.output.length > this.count){
           this.ent = false;

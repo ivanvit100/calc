@@ -7,7 +7,7 @@ curData = [
 	{
 		"name": "BYN",
 		"fullname": "Белорусский рубль",
-		"mark": "Br"
+		"mark": "₽"
 	},
 	{
 		"name": "USD",
@@ -43,11 +43,6 @@ curData = [
 		"name": "CNY",
 		"fullname": "Юань",
 		"mark": "¥"
-	},
-	{
-		"name": "ISK",
-		"fullname": "Крона",
-		"mark": "Kr"
 	},
 	{
 		"name": "BRL",

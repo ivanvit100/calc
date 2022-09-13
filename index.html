@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta itemprop="keywords" name="keywords" content="ivanvit, vue, js, css, sass, scss, калькулятор, онлайн, лэндинг"><!--Keywords-->
-    <meta itemprop="description" name="description" content="Красивый и функциональный безсерверный калькулятор, написанный при помощи Vue.js и SASS"><!--Описание для поисковых систем-->
+    <meta itemprop="description" name="description" content="Красивый и функциональный бессерверный калькулятор, написанный при помощи Vue.js и SCSS"><!--Описание для поисковых систем-->
     <meta name="robots" content="noarchive, nosnippet">
     <meta name="theme-color" content="#ffffff"><!--Цвет поисковой строки-->
     <!-- Open Graph / Facebook -->
@@ -44,7 +44,26 @@
   </head>
   <body unselectable="on" oncontextmenu="return false;">
     <noscript>
-        Внимание! Если Вы видите этот баннер, значит в Вашем браузере отключён Java Script. Это приложение работает при активном использовании JS, поэтому до тех пор, пока Вы не разрешите использование Java Script в настройках Вашего браузера, разработчик не гарантирует полноценное функционирование сайта.
+        <style>
+            #noSImg{
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            body{
+                padding: 10px;
+                background-color: #f8f2ef;
+            }
+            html{
+                box-sizing: border-box;
+                font-family: 'Ubuntu', sans-serif;
+            }
+        </style>
+        <center><h1><b>---Внимание!---</b></h2></center>
+        <img src="https://calc.ivanvit.ru/static/preview.png" alt="preview" id="noSImg">
+        <p>Если Вы видите этот баннер, значит в Вашем браузере отключён Java Script.</p>
+        <p>Перед дальнейшим взаимодействие с данным приложением рекомендуем Вам разрешить использование Java Script в настройках Вашего браузера и перезагрузить страницу.</p>
+        <p>Это приложение использует JS как для отображения страниц, так и для обеспечения функциональности. Эта страница не использует Java Script для сбора информации о посетителях и не предполагает использование Cookie.</p>
+        <p>Исходный код проекта находится в открытом доступе и доступен <a href="https://github.com/ivanvit100/calc">здесь</a>.</p>
     </noscript>
     <div id="app"></div>
     <!-- Todo: only include in production -->

@@ -195,3 +195,7 @@ select{
 	transform: rotate(0deg);
 	transition: transform .3s ease-in-out;
 }
+#convCont > #common{
+	margin: auto; 
+	max-width: 700px;
+}

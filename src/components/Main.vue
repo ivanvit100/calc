@@ -177,9 +177,11 @@ export default{
 		},
 		Ok: function(){
 			/*Вывод на экран ответа из дополнительной строки, очистка*/
-			if(this.find != "" || document.querySelector("#ans").innerText == false){
+			if(this.find != "" || document.querySelector("#ans").innerText == "false"){
 				if(document.querySelector("#ans").innerText != "Error"){this.output = String(eval(this.find))}
-				else{this.output = ""}
+				else if(this.find == ""){
+					console.warn("[Ok]: Ошибка!")
+				}else{this.output = ""}
 				this.find = "";
 				this.ent = this.flag = true;
 				this.out = false; 

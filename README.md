@@ -11,10 +11,7 @@ You may find this on the [site](https://calc.ivanvit.ru)
 2. Dark/light themes
 3. Math functions (sin, cos, log etc.)
 4. PWA (offline mode)
-
-## Plans
-1. Create programming calculator
-2. Currency converter
+5. Currency converter
 
 ## Technologies
 1. Vue.js

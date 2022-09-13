@@ -4,7 +4,7 @@
 	<div id="currencyChange">
 		<select v-model="val1" id="in">
 			<option disabled value="" selected>Конвертировать из</option>
-			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}</option>
+			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
 		</select>
 		<img @click="swap" src="@/assets/img/doubleArrow.png" alt="swap" id="doubleArrow">
 		<select v-model="val2" id="out">
@@ -77,7 +77,7 @@ export default{
 			/*Функция обновления выбранных валют*/
 			this.$emit('updateVal', {
 				val1: this.val1,
-				val2: this.val2
+				val2: this.val2,
 			});
 		},
 		apiGo: function(){

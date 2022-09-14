@@ -11,7 +11,7 @@
 	<div class="moreButton" id="sin" @click="cnstAdd('sin(', 'Math.sin(')">sin</div>
 	<div class="moreButton" id="cos" @click="cnstAdd('cos(', 'Math.cos(')">cos</div>
 	<div class="moreButton" id="tg" @click="cnstAdd('tan(', 'Math.tan(')">tan</div>
-	<div class="moreButton" id="ctg" @click="cnstAdd('ctn(', 'ctn(')">ctn</div>
+	<div class="moreButton" id="ctg" @click="cnstAdd('ctn(', '1/Math.tan(')">ctn</div>
 	<div class="moreButton" id="sqare" @click="cnstAdd('√(', 'Math.sqrt(')">√</div>
 	<div class="moreButton" id="deg" @click="operatorAdd('^', '**')">xʸ</div>
 	<div class="moreButton" id="pr" @click="fAdd()">x!</div>
@@ -27,6 +27,9 @@ export default{
 	computed:{
 		last: function(){
 			return this.output.slice(-1)
+		},
+		last1: function(){
+			return this.find.slice(-1)
 		}
 	},
 	methods:{
@@ -52,22 +55,18 @@ export default{
 		cnstAdd: function(p, f){
 			/*Функция получает на вход константу и её вычисляемый аналог в JS.
 			Подстановка происходит, если последний символ - не число.*/
-			if(["=", ">", "<", "-", "+", "/", "*", "", "("].includes(this.last)){
+			if(["=", ">", "<", "-", "+", "/", "*", "", "("].includes(this.last1) && this.last1 != ""){
 				this.output += p;
     			this.find += f;
     			this.fact = "";
     			this.updateParent();
 			}
-			else if(this.find == ""){
+			else if(this.output == "" || this.output == "0"){
 				this.output = p;
 				this.find = f;
 				this.fact = "";
 				this.updateParent();
 			}
-		},
-		ctn: function(x){
-			/*Вычисление котангенса*/
-			return 1 / Math.tan(x)
 		},
 		newNum: function(){
 			/*Вспомогательная функция, извлекающая число для вычисления факториала,

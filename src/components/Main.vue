@@ -241,6 +241,9 @@ export default{
 				this.fact = this.fact.substring(0, this.fact.length - 1);
 			}else if(this.last == "="){
 				this.find = this.find.substring(0, this.find.length - 2);
+			}else if(["1/Math.tan("].includes(this.find.slice(-11))){
+				this.find = this.find.substring(0, this.find.length - 11);
+				this.output = this.output.substring(0, this.output.length - 3);
 			}else if(["sin(", "cos(", "tan("].includes(this.last4)){
 				this.find = this.find.substring(0, this.find.length - 9);
 				this.output = this.output.substring(0, this.output.length - 3);
@@ -250,9 +253,6 @@ export default{
 			}else if(["ln("].includes(this.output.slice(-3))){
 				this.find = this.find.substring(0, this.find.length - 9);
 				this.output = this.output.substring(0, this.output.length - 2);
-			}else if(["ctn("].includes(this.output.slice(-4))){
-				this.find = this.find.substring(0, this.find.length - 4);
-				this.output = this.output.substring(0, this.output.length - 3);
 			}else if(["√("].includes(this.output.slice(-2))){
 				this.find = this.find.substring(0, this.find.length - 10);
 				this.output = this.output.substring(0, this.output.length - 1);

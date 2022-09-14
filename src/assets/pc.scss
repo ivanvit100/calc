@@ -26,4 +26,16 @@ E-Mail: develope@ivanvit.ru */
 		-moz-box-shadow: -5px 0px 15px -5px rgba(0, 0, 0, 0.32); 
 		box-shadow: -5px 0px 15px -5px rgba(0, 0, 0, 0.32);
 	}
+	#convCont{
+		display: grid;
+		grid-template-columns: 50% 50%;
+		#more{
+			box-shadow: -5px 10px 15px -5px rgba(0,0,0,0.32);
+		}
+		#common{
+			-webkit-box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.32) inset !important;
+			-moz-box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.32) inset !important; 
+			box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.32) inset !important;
+		}
+	}
 }

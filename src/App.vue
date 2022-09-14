@@ -9,6 +9,7 @@
   <div v-else id="convCont">
     <converter @updateVal="updateVal" @updateP="update" @updateT="updateTotal" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" :total="total" :val1="val1" :val2="val2"></converter>
     <my-main @updateP="update" :output="output" :findText="findText" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent" ref="main"></my-main>
+    <more v-if="pc" @updateP="update" @opAdd="opAdd" :output="output" :find="find" :copyText="copyText" :fact="fact" :flag="flag" :ent="ent"></more>
   </div>
   <div id="copy">Скопировано</div>
 </div>

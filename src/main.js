@@ -5,7 +5,8 @@ import router from './router'
 require('./assets/style.min.css')
 require('./assets/waves.min.css')
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.config.silent = true;
 stop = "";
 
 new Vue({

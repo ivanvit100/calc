@@ -57,7 +57,7 @@ export default{
 	methods:{
 		updateParent: function(){
 			/*Функция обновления родитльских данных вывода.*/
-			this.$emit('updateP', {
+			this.$emit('update', {
 				output: this.output,
 				find: this.find,
 				copyText: this.copyText,

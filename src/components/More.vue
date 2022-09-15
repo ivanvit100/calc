@@ -35,7 +35,7 @@ export default{
 	methods:{
 		updateParent: function(){
 			/*Функция обновления родитльских данных вывода.*/
-			this.$emit('updateP', {
+			this.$emit('update', {
 				output: this.output,
 				find: this.find,
 				copyText: this.copyText,
@@ -91,7 +91,7 @@ export default{
 			if(this.fact == "" && ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.output.slice(-1))){this.fact = this.newNum()}
 			if(this.fact.indexOf(".") == -1){
 				this.output += "!";
-				this.find = this.find.substring(0, this.find.length - this.length) + String(this.factorial(this.fact));
+				this.find = this.find.substring(0, this.find.length - this.fact.length) + String(this.factorial(this.fact));
 				this.fact = "";
 			}
 			this.updateParent();

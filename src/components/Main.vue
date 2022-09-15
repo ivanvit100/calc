@@ -44,8 +44,8 @@ export default{
 	},
 	methods:{
 		updateParent: function(){
-			/*Функция обновления родитльских данных вывода.*/
-			this.$emit('updateP', {
+			/*Функция обновленя родитльских данных вывода.*/
+			this.$emit('update', {
 				output: this.output,
 				find: this.find,
 				copyText: this.copyText,
@@ -141,6 +141,9 @@ export default{
     		}else if(["+", "-", "*", "^", "/", "."].includes(this.last)){
     			this.output = "0" + operator;
     			this.find = "0" + func;
+    		}else if(func == "**"){
+    			this.output += operator;
+    			this.find += func;
     		}
     		operator == "." ? this.flag = false : this.flag = true;
     		if(func != "."){this.fact = ""}

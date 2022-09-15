@@ -3,12 +3,12 @@
   <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="calc" v-if="mode">
     <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
-    <my-main v-bind="config" :findText="findText" @update="update" ref="main"></my-main>
+    <my-main v-show="showOne" v-bind="config" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div v-else id="convCont">
     <converter v-bind="config" @update="update" @updateVal="updateVal" @updateT="updateTotal" :findText="findText" :total="total" :val1="val1" :val2="val2"></converter>
-    <my-main v-bind="config" :findText="findText" @update="update" ref="main"></my-main>
+    <my-main v-show="showOne" v-bind="config" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div id="copy">Скопировано</div>

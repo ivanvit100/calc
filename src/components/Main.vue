@@ -27,7 +27,7 @@
 <script>
 export default{
 	name: 'myMain',
-	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag'],
+	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag', 'fix'],
 	data(){
 		return{
 			chk: false, //Вспомогательная переменная
@@ -238,6 +238,10 @@ export default{
 			Также обновляется значение переменной flag.*/
 			}else if(this.output.slice(-1) == "π" || this.output.slice(-1) == "e"){
 				this.find = this.find.substring(0, this.find.length - 17);
+			}else if(this.fix.includes(this.find.substring(this.find.length-21, this.find.length-1)) && !this.fix.includes(this.output.substring(this.output.length-21, this.output.length-1))){
+				this.find = this.find.substring(0, this.find.length - 24);
+			}else if(this.fix.includes(this.find.substring(this.find.length-20, this.find.length-1)) && !this.fix.includes(this.output.substring(this.output.length-20, this.output.length-1))){
+				this.find = this.find.substring(0, this.find.length - 23);
 			}else if(this.last in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]){
 				this.flag = false;
 				this.find = this.find.substring(0, this.find.length - 1);

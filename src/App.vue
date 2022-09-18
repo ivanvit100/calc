@@ -3,12 +3,12 @@
   <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="calc" v-if="mode">
     <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
-    <my-main v-show="showOne" v-bind="config" :findText="findText" @update="update" ref="main"></my-main>
+    <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div v-else id="convCont">
     <converter v-bind="config" @update="update" @updateVal="updateVal" @updateT="updateTotal" :findText="findText" :total="total" :val1="val1" :val2="val2"></converter>
-    <my-main v-show="showOne" v-bind="config" :findText="findText" @update="update" ref="main"></my-main>
+    <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div id="copy">Скопировано</div>
@@ -36,6 +36,7 @@ export default{
       total: 0, //Курс выбранных валют
       val1: "", //Валюта: вход
       val2: "", //Валюта: выход
+      fix: ["0.00000000000000001", "0.00000000000000002", "0.00000000000000003", "-0.00000000000000001", "-0.00000000000000002", "-0.00000000000000003"], //
       config: {
         output: '', //Хранилище примера
         find: '', //Хранилище ответа
@@ -132,10 +133,9 @@ export default{
       if(this.config.find.length >= 0){this.ansText =  ""}
       if(eval(this.config.find).toString().length == 19){
         /*Исправление ответов с потерянными.добавленными байтами*/
-        let fix = ["0.00000000000000001", "0.00000000000000002", "0.00000000000000003", "-0.00000000000000001", "-0.00000000000000002", "-0.00000000000000003"];
-        let newTestNum = eval(this.config.find + "+(" + fix[i] + ")");
         for(var i = 0; i < 6; i++){
-          if(newTestNum.toString().length < eval(this.config.find).toString().length){
+          let newTestNum = this.config.find + "+(" + this.fix[i] + ")";
+          if(eval(newTestNum).toString().length < eval(this.config.find).toString().length){
             this.config.find = newTestNum;
           }
         }

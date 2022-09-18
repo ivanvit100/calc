@@ -128,10 +128,18 @@ export default{
     ansGo: function(){
       /*Функция выводит предварительный ответ в специальную область на
       экране. Ответ рассчитывается при помощи функции eval().
-      Проверки на случай длинных ответов, а также Infinity и NaN.
-      Issue: исправить "неверные" ответы
-      Пример: 0.3 - 0.2 = 0.0999...*/
-      if(this.config.find.length == 0){this.ansText =  ""}
+      Проверки на случай длинных ответов, а также Infinity и NaN.*/
+      if(this.config.find.length >= 0){this.ansText =  ""}
+      if(eval(this.config.find).toString().length == 19){
+        /*Исправление ответов с потерянными.добавленными байтами*/
+        let fix = ["0.00000000000000001", "0.00000000000000002", "0.00000000000000003", "-0.00000000000000001", "-0.00000000000000002", "-0.00000000000000003"];
+        let newTestNum = eval(this.config.find + "+(" + fix[i] + ")");
+        for(var i = 0; i < 6; i++){
+          if(newTestNum.toString().length < eval(this.config.find).toString().length){
+            this.config.find = newTestNum;
+          }
+        }
+      }
       try{
         eval(this.config.find).toString().length > this.count + 3 ? stop = eval(this.config.find).toString().substring(0, this.count + 2) : stop = eval(this.config.find);
         [Infinity, NaN].includes(stop) ? this.ansText = "Error" : this.ansText = stop;

@@ -36,7 +36,6 @@ export default{
       total: 0, //Курс выбранных валют
       val1: "", //Валюта: вход
       val2: "", //Валюта: выход
-      fix: ["0.00000000000000001", "0.00000000000000002", "0.00000000000000003", "-0.00000000000000001", "-0.00000000000000002", "-0.00000000000000003", "0.0000000000000001", "0.0000000000000002", "0.0000000000000003", "-0.0000000000000001", "-0.0000000000000002", "-0.0000000000000003"], //
       config: {
         output: '', //Хранилище примера
         find: '', //Хранилище ответа
@@ -45,6 +44,7 @@ export default{
         flag: true, //Целое ли число
         fact: '', //Число для вычисления факториала
       },
+      TestNum: 0, //
     }
   },
   computed:{
@@ -96,10 +96,9 @@ export default{
     newTest: function(newTestNum){
       /*Вспомогательная функция для исправление ошибки потери
       байтов при вычислении ответа.*/
-      if(eval(newTestNum).toString().length < eval(this.config.find).toString().length){
-        return newTestNum;
+      if(eval(newTestNum).toString().length < eval(this.config.find).toString().length && eval(newTestNum).toString().length < eval(this.TestNum).toString().length){
+        this.TestNum = newTestNum;
       }
-      return find
     },
     opAdd: function(data){
       /*Функция вызова метода operatorAdd из других компонентов*/
@@ -141,21 +140,14 @@ export default{
       if(this.config.find.length >= 0){this.ansText =  ""}
       if(eval(this.config.find).toString().length >= 18){
         /*Исправление ответов с потерянными/добавленными байтами*/
+        this.TestNum = this.config.find;
         for(var i = 1; i < 10; i++){
-          var TestNum = this.config.find;
-          newTestNum = this.config.find + "+(0." + "0".repeat(eval(this.config.find).toString().length-3) + i + ")";
-          TestNum = this.newTest(newTestNum);
-          if(TestNum != this.config.find){
-            this.config.find = TestNum;
-            break
-          }
+          var newTestNum = this.config.find + "+(0." + "0".repeat(eval(this.config.find).toString().length-3) + i + ")";
+          this.newTest(newTestNum);
           newTestNum = this.config.find + "+(-0." + "0".repeat(eval(this.config.find).toString().length-3) + i + ")";
-          TestNum = this.newTest(newTestNum);
-          if(TestNum != this.config.find){
-            this.config.find = TestNum;
-            break
-          }
+          this.newTest(newTestNum);
         }
+        if(eval(this.TestNum) != eval(this.config.find)){this.config.find = this.TestNum}
       }
       try{
         eval(this.config.find).toString().length > this.count + 3 ? stop = eval(this.config.find).toString().substring(0, this.count + 2) : stop = eval(this.config.find);

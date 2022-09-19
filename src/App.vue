@@ -93,6 +93,14 @@ export default{
       /*Функция, переключающая режим работы приложения*/
       this.mode = data.mode;
     },
+    newTest: function(newTestNum){
+      /*Вспомогательная функция для исправление ошибки потери
+      байтов при вычислении ответа.*/
+      if(eval(newTestNum).toString().length < eval(this.config.find).toString().length){
+        return newTestNum;
+      }
+      return find
+    },
     opAdd: function(data){
       /*Функция вызова метода operatorAdd из других компонентов*/
       this.$refs.main.operatorAdd(data.operator, data.func);
@@ -131,12 +139,21 @@ export default{
       экране. Ответ рассчитывается при помощи функции eval().
       Проверки на случай длинных ответов, а также Infinity и NaN.*/
       if(this.config.find.length >= 0){this.ansText =  ""}
-      if(eval(this.config.find).toString().length == 19 || eval(this.config.find).toString().length == 18){
-        /*Исправление ответов с потерянными.добавленными байтами*/
-        for(var i = 0; i < 12; i++){
-          let newTestNum = this.config.find + "+(" + this.fix[i] + ")";
-          if(eval(newTestNum).toString().length < eval(this.config.find).toString().length){
-            this.config.find = newTestNum;
+      if(eval(this.config.find).toString().length >= 18){
+        /*Исправление ответов с потерянными/добавленными байтами*/
+        for(var i = 1; i < 10; i++){
+          var TestNum = this.config.find;
+          newTestNum = this.config.find + "+(0." + "0".repeat(eval(this.config.find).toString().length-3) + i + ")";
+          TestNum = this.newTest(newTestNum);
+          if(TestNum != this.config.find){
+            this.config.find = TestNum;
+            break
+          }
+          newTestNum = this.config.find + "+(-0." + "0".repeat(eval(this.config.find).toString().length-3) + i + ")";
+          TestNum = this.newTest(newTestNum);
+          if(TestNum != this.config.find){
+            this.config.find = TestNum;
+            break
           }
         }
       }

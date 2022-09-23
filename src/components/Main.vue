@@ -55,6 +55,10 @@ export default{
 				out: this.out
 			});
 		},
+		deleteTest: function(){
+			/*Функция вызова родительского метода deleteTest.*/
+			this.$emit('deleteTest');
+		},
 
 		//Функции кнопок
 		numAdd: function(num){

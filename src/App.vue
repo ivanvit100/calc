@@ -3,13 +3,13 @@
   <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="calc" v-if="mode">
     <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
-    <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
-    <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
+    <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" @deleteTest="deleteTest" ref="main"></my-main>
+    <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd" @deleteTest="deleteTest"></more>
   </div>
   <div v-else id="convCont">
     <converter v-bind="config" @update="update" @updateVal="updateVal" @updateT="updateTotal" :findText="findText" :total="total" :val1="val1" :val2="val2"></converter>
-    <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
-    <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
+    <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" @deleteTest="deleteTest" ref="main"></my-main>
+    <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd" @deleteTest="deleteTest"></more>
   </div>
   <div id="copy">Скопировано</div>
 </div>
@@ -44,7 +44,8 @@ export default{
         flag: true, //Целое ли число
         fact: '', //Число для вычисления факториала
       },
-      TestNum: 0, //
+      TestNum: 0, //Вспомогательная переменная
+      newTestNum: "", //Вспомогательная переменная
     }
   },
   computed:{
@@ -93,11 +94,31 @@ export default{
       /*Функция, переключающая режим работы приложения*/
       this.mode = data.mode;
     },
-    newTest: function(newTestNum){
+    newTest: function(n){
       /*Вспомогательная функция для исправление ошибки потери
       байтов при вычислении ответа.*/
-      if(eval(newTestNum).toString().length < eval(this.config.find).toString().length && eval(newTestNum).toString().length < eval(this.TestNum).toString().length){
-        this.TestNum = newTestNum;
+      if(eval(n).toString().length < eval(this.config.find).toString().length && eval(n).toString().length < eval(this.TestNum).toString().length){
+        this.TestNum = n;
+      }
+    },
+    deleteTest: function(){
+      /*Вспомогательная функция, удаляющая последствия работы
+      функции newTest в том случае, если данная вставка мешает
+      корректной работе приложения в дальнейшем.*/
+      if(this.config.find.slice(-1) == ")"){
+        this.TestNum = this.config.find;
+        this.newTestNum = "";
+        while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ")", "("].includes(this.TestNum.slice(-1))){
+          this.newTestNum = this.TestNum.slice(-1) + this.newTestNum;
+          this.TestNum = this.TestNum.substring(0, this.TestNum.length - 1);
+        }
+        if(this.TestNum.slice(-2) == "(-"){
+          this.newTestNum = "(-" + this.newTestNum
+        }
+        if(this.newTestNum.substring(0, 1) == "("){
+          this.config.find = this.config.find.substring(0, this.config.find.length - this.newTestNum.length - 1);
+          console.log(this.config.find);
+        }
       }
     },
     opAdd: function(data){

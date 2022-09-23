@@ -44,6 +44,10 @@ export default{
 				flag: this.flag
 			});
 		},
+		deleteTest: function(){
+			/*Функция вызова родительского метода deleteTest.*/
+			this.$emit('deleteTest');
+		},
 		operatorAdd: function(operator, func){
 			/*Функция, вызывающая метод operatorAdd.*/
 			this.$emit('opAdd', {

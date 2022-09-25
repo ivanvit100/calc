@@ -24,7 +24,7 @@ import myMain from './Main.vue';
 export default{
 	name: 'converter',
 	components: {myMain},
-	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag', 'total', 'val1', 'val2'],
+	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'total', 'val1', 'val2'],
 	data(){
 		return{
 			key: "9116ea120a47ab05aa695a9c3199d1437def2d53", //Ключ для обращения к API
@@ -63,7 +63,6 @@ export default{
 				copyText: this.copyText,
 				ent: this.ent,
 				fact: this.fact,
-				flag: this.flag,
 			});
 		},
 		updateTotal: function(total){
@@ -103,7 +102,6 @@ export default{
     	this.$nextTick(function(){
     		this.find = this.fact = "";
     		this.ent = false;
-    		this.flag = true;
     		this.copyText = this.output = "0";
     		this.updateParent();
     	})
@@ -111,7 +109,6 @@ export default{
 	beforeDestroy(){
 		this.find = this.fact = "";
     	this.ent = false;
-    	this.flag = true;
     	this.copyText = this.output = "0";
     	this.updateParent();
 	}

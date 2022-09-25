@@ -27,16 +27,18 @@
 <script>
 export default{
 	name: 'myMain',
-	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'flag', 'fix'],
+	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'fix'],
 	data(){
 		return{
 			chk: false, //Вспомогательная переменная
 			out: false, //Выводить ли ответ
+			TestNum: 0, //Вспомогательная переменная
+			newTestNum: "", //Вспомогательная переменная
 		}
 	},
 	computed:{
 		last: function(){
-			return this.find.slice(-1)
+			return this.find.toString().slice(-1)
 		},
 		last4: function(){
 			return this.output.slice(-4)
@@ -51,19 +53,51 @@ export default{
 				copyText: this.copyText,
 				ent: this.ent,
 				fact: this.fact,
-				flag: this.flag,
 				out: this.out
 			});
 		},
 		deleteTest: function(){
-			/*Функция вызова родительского метода deleteTest.*/
-			this.$emit('deleteTest');
+			/*Вспомогательная функция, удаляющая последствия работы
+			функции newTest в том случае, если данная вставка мешает
+			корректной работе приложения в дальнейшем.*/
+			if(this.find.toString().slice(-1) == ")"){
+				this.TestNum = this.find;
+				this.newTestNum = "";
+				while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ")", "("].includes(this.TestNum.slice(-1))){
+					this.newTestNum = this.TestNum.slice(-1) + this.newTestNum;
+					this.TestNum = this.TestNum.substring(0, this.TestNum.length - 1);
+				}
+				if(this.TestNum.slice(-2) == "(-"){
+					this.newTestNum = "(-" + this.newTestNum
+				}
+				if(this.newTestNum.substring(0, 1) == "("){
+					this.find = this.find.substring(0, this.find.length - this.newTestNum.length - 2);
+					this.updateParent();
+				}
+			}
+		},
+		newNum: function(){
+			/*Вспомогательная функция, извлекающая число для проверки
+			на возможность добавить вчисло плавующую точку.*/
+			let n = 0;
+			let nm = "";
+			while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(this.output.substring(this.output.length - 1 - n, this.output.length - n))){
+				nm = this.output.substring(this.output.length - 1 - n, this.output.length - n) + nm;
+				n += 1;
+			}
+			return nm;
 		},
 
 		//Функции кнопок
 		numAdd: function(num){
 			/*Функция вывода чисел на экран*/
-			if(this.find.slice(-1) != ")" && !(["e", "π", "!"].includes(this.output.slice(-1)))){
+			this.chk = this.find;
+			this.deleteTest();
+			this.chk = this.chk == this.find;
+			if(!this.chk){
+				this.find += this.output.slice(-1)
+			}
+			if(this.find.toString().slice(-1) != ")" && !(["e", "π", "!"].includes(this.output.slice(-1)))){
 				if(this.output == "0"){
 					this.output = this.find = "";
 				}
@@ -76,46 +110,53 @@ export default{
 		},
 		Zero: function(){
 			/*Функция обрабатывает число "0" и запускает функцию numAdd().
-			Если последний символ не "." или число, то после нуля дописывается "."*/
-			try{this.chk = Number.isInteger(eval(this.output.slice(-1)))}
-			catch(c){this.chk = false}
-			if(this.chk || this.output.slice(-1) == "."){this.numAdd("0")}
+			Если последний символ не "." или число, то после нуля дописывается ".".*/
+			this.chk = this.newNum();
+			this.chk = this.chk.toString().indexOf(".") >= 0;
+			if(this.chk){this.numAdd("0")}
 			else if(["e", "π"].includes(this.output.slice(-1)) || this.output.slice(-1) == ")"){console.warn("[Zero]: Ошибка")}
 			else{
 				this.output += "0."; 
 				this.find += "0.";
 				this.fact += "0.";
-				this.flag = this.out = false;
+				this.out = false;
 				this.updateParent();
 			}
 		},
 		Dot: function(){
 			/*Функция добавляет в выражение плавающую точку.
-			Если точка - первый символ числа, на экран выводится "0."*/
-			try{this.chk = Number.isInteger(eval(this.last))}
-			catch(c){this.chk = false}
-			if(this.flag && this.chk && !(["e", "π"].includes(this.output.slice(-1)))){
+			Если точка - первый символ числа, на экран выводится "0.".*/
+			let f = parseInt(this.last, 10);
+			this.chk = this.newNum();
+			console.log(this.chk);
+			this.chk = this.chk.toString().indexOf(".") >= 0;
+			if(!this.chk && !Number.isNaN(f)){
 				this.operatorAdd(".", ".");
 				this.fact += ".";
 			}
-			else if(this.flag && this.find == "" && this.output == "0"){
+			else if(!this.chk && this.find == "" && this.output == "0"){
 				this.output += ".";
 				this.find += "0.";
 				this.fact += ".";
 				this.copyText = this.output;
 			}
-			else if(this.flag && (this.output.slice(-1) != ")") && !(["e", "π"].includes(this.output.slice(-1)))){
+			else if(!this.chk && (this.output.slice(-1) != ")") && !(["e", "π"].includes(this.output.slice(-1)))){
 				this.output += "0."; 
 				this.find += "0.";
 				this.fact += "0.";
 				this.out = false; 
 			}
-			this.flag = this.fact.indexOf(".") == -1;
+			this.fact.indexOf(".") == -1;
 			this.updateParent();
 		},
 		operatorAdd: function(operator, func){
 			/*Функция получает на вход математический оператор, выводимый на экран,
-			и его вычисляемый аналог для подстановки в find*/
+			и его вычисляемый аналог для подстановки в find.*/
+			if(func == "**"){
+				this.chk = this.find;
+				this.deleteTest();
+				if(this.chk != this.find){this.find += this.output.slice(-1)}
+			}
 			try{this.chk = Number.isInteger(eval(this.last))}catch(c){this.chk = false}
 			/*Оператор выводится на экран, если перед ним стояло число,
 			в противном случае оператор может заменять собой
@@ -136,7 +177,7 @@ export default{
 				this.find = this.find.substring(0, this.find.length - 2) + func;
 			}else if(this.last == "("){
 				console.warn("[operatorAdd]: Ошибка!")
-			}else if(!(["+", "-", "*", "^", "/", "."].includes(this.last)) || (operator == "." && this.flag)){
+			}else if(!(["+", "-", "*", "^", "/", "."].includes(this.last)) || (operator == "." && this.newNum().toString().indexOf(".") == -1)){
     			this.output += operator;
     			this.find += func;
     		}else if(["+", "-", "*", "^", "/", "."].includes(this.last) && this.findText != "-"){
@@ -149,7 +190,6 @@ export default{
     			this.output += operator;
     			this.find += func;
     		}
-    		operator == "." ? this.flag = false : this.flag = true;
     		if(func != "."){this.fact = ""}
 			this.out = false;
     		this.updateParent();
@@ -172,12 +212,10 @@ export default{
 			this.out = false; 
 			this.updateParent();
 			this.fact = "";
-			this.flag = true;
 		},
 		Clear: function(){
 			/*Очистка экрана*/
 			this.find = this.fact = "";
-			this.flag = true;
 			this.copy = this.output = "0";
 			this.out = false; 
 			this.updateParent();
@@ -190,7 +228,7 @@ export default{
 					console.warn("[Ok]: Ошибка!")
 				}else{this.output = ""}
 				this.find = "";
-				this.ent = this.flag = true;
+				this.ent = true;
 				this.out = false; 
 				this.updateParent();
 				this.out = true;
@@ -202,13 +240,15 @@ export default{
 		findDEL: function(){
 			/*Вспомогательная функция для функции Del(),
 			осуществляющая удаление элементов сложных чисел в поле ответа.*/
-			while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.find.slice(-1))){
+			while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.find.toString().slice(-1))){
 				this.find = this.find.substring(0, this.find.length - 1);
 			}
 		},
 		Del: function(){
 			/*Issue: требуется рефакторинг*/
-			this.flag = true;
+			this.chk = this.find;
+			this.deleteTest();
+			this.chk = this.chk == this.find;
 			if(["!"].includes(this.output.slice(-1))){
 				/*Если удаляется факториал: 
 				1. Удаляется его числовое значениеиз переменной find 
@@ -219,7 +259,7 @@ export default{
 				находится и вносится в переменную значение исходного числа.
 				3.Обновляются все связанные переменные.*/
 				this.findDEL();
-				if(this.find.slice(-2) == "e+"){
+				if(this.find.toString().slice(-2) == "e+"){
 					this.find = this.find.substring(0, this.find.length - 2);
 					this.findDEL();
 					if(this.last == "."){
@@ -238,17 +278,17 @@ export default{
 				this.find += nm;
 				this.fact = nm;
 			/*В последующих условиях удаляется необходимое количество символов
-			из переменных find и output в соответствии с удаляемой функцией.
-			Также обновляется значение переменной flag.*/
+			из переменных find и output в соответствии с удаляемой функцией.*/
+			}else if(!this.chk){
+				console.log("[deleteTest]: Success!");
 			}else if(this.output.slice(-1) == "π" || this.output.slice(-1) == "e"){
 				this.find = this.find.substring(0, this.find.length - 17);
 			}else if(this.last in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]){
-				this.flag = false;
 				this.find = this.find.substring(0, this.find.length - 1);
 				this.fact = this.fact.substring(0, this.fact.length - 1);
 			}else if(this.last == "="){
 				this.find = this.find.substring(0, this.find.length - 2);
-			}else if(["1/Math.tan("].includes(this.find.slice(-11))){
+			}else if(["1/Math.tan("].includes(this.find.toString().slice(-11))){
 				this.find = this.find.substring(0, this.find.length - 11);
 				this.output = this.output.substring(0, this.output.length - 3);
 			}else if(["sin(", "cos(", "tan("].includes(this.last4)){
@@ -274,6 +314,7 @@ export default{
 			}
 			this.output = this.output.substring(0, this.output.length - 1);
 			this.out = false; 
+			this.fact = "";
 			this.updateParent();
 		},
 	},

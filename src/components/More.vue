@@ -23,7 +23,7 @@
 <script>
 export default{
 	name: 'more',
-	props: ['copyText', 'output', 'find', 'ent', 'fact', 'flag'],
+	props: ['copyText', 'output', 'find', 'ent', 'fact'],
 	computed:{
 		last: function(){
 			return this.output.slice(-1)
@@ -41,12 +41,7 @@ export default{
 				copyText: this.copyText,
 				ent: this.ent,
 				fact: this.fact,
-				flag: this.flag
 			});
-		},
-		deleteTest: function(){
-			/*Функция вызова родительского метода deleteTest.*/
-			this.$emit('deleteTest');
 		},
 		operatorAdd: function(operator, func){
 			/*Функция, вызывающая метод operatorAdd.*/
@@ -55,7 +50,6 @@ export default{
 				func: func
 			});
 		},
-
 		cnstAdd: function(p, f){
 			/*Функция получает на вход константу и её вычисляемый аналог в JS.
 			Подстановка происходит, если последний символ - не число.*/
@@ -74,7 +68,7 @@ export default{
 		},
 		newNum: function(){
 			/*Вспомогательная функция, извлекающая число для вычисления факториала,
-			в случае если переменная fact пуста*/
+			в случае если переменная fact пуста.*/
 			let n = 0;
 			let nm = "";
 			while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(this.output.substring(this.output.length - 1 - n, this.output.length - n))){
@@ -83,7 +77,7 @@ export default{
 			}
 			return nm;
 		},
-		fAdd:function(){
+		fAdd: function(){
 			/*Функция проверяет возможность вычисления факториала и вызывает 
 			функцию factorial(n) в случае успеха.*/
 			if(this.output == ""){
@@ -92,8 +86,8 @@ export default{
 				if(nm != "0"){this.fact = nm}
 				if(this.output.substring(0, 1) == "-"){this.find = "-"}
 			}
-			if(this.fact == "" && ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(this.output.slice(-1))){this.fact = this.newNum()}
-			if(this.fact.indexOf(".") == -1){
+			if(this.fact == "" && ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."].includes(this.output.slice(-1))){this.fact = this.newNum()}
+			if(this.fact.indexOf(".") == -1 && this.last != "." && this.last != "!"){
 				this.output += "!";
 				this.find = this.find.substring(0, this.find.length - this.fact.length) + String(this.factorial(this.fact));
 				this.fact = "";

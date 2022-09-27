@@ -2,7 +2,7 @@
 <div id="container">
   <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
   <div id="calc" v-if="mode">
-    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="./assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
+    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="/static/img/icons/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
     <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>

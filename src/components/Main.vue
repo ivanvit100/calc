@@ -19,7 +19,7 @@
 	<div class="button orange NumpadAdd Equal" id="plus" @click="operatorAdd('+', '+')">+</div>
 	<div class="button num0" @click="Zero()">0</div>
 	<div class="button Period Comma NumpadDecimal" @click="Dot()">.</div>
-	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.png" alt="del" id="del"></div>
+	<div class="button Backspace" @click="Del()"><img src="/static/img/icons/dl.png" alt="del" id="del"></div>
 	<div class="button Enter NumpadEnter" @click="Ok()">=</div>
 </div>
 </template>

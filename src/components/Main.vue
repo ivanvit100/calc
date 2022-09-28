@@ -113,7 +113,8 @@ export default{
 			Если последний символ не "." или число, то после нуля дописывается ".".*/
 			this.chk = this.newNum();
 			this.chk = this.chk.toString().indexOf(".") >= 0;
-			if(this.chk){this.numAdd("0")}
+			console.log(this.chk || ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1", "."].includes(this.last));
+			if(this.chk || ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1", "."].includes(this.last)){this.numAdd("0")}
 			else if(["e", "π"].includes(this.output.slice(-1)) || this.output.slice(-1) == ")"){console.warn("[Zero]: Ошибка")}
 			else{
 				this.output += "0."; 

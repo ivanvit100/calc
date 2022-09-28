@@ -6,7 +6,7 @@
 			<option disabled value="" selected>Конвертировать из</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
 		</select>
-		<img @click="swap" src="/static/img/icons/doubleArrow.png" alt="swap" id="doubleArrow">
+		<img @click="swap" src="/static/img/icons/doubleArrow.png" alt="swap" id="doubleArrow" rel="preload">
 		<select v-model="val2" id="out">
 			<option disabled value="" selected>Конвертировать в</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>

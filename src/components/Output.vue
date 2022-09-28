@@ -2,7 +2,7 @@
 <div id="output" @dblclick="copyToClipboard">
 	<div id="switch">
 		<img v-if="dark" @click="light" src="/static/img/icons/light.png" alt="switch" class="swh">
-		<img v-else @click="light" src="/static/img/icons/dark.png" alt="switch" class="swh">
+		<img v-else @click="light" src="/static/img/icons/dark.png" alt="switch" class="swh" rel="preload">
 	</div>
 	<div id="mode">
 		<img :class="{act: act}" @click="mode(true)" src="/static/img/icons/calc.svg" alt="calculator" id="calcButton">

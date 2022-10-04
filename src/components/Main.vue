@@ -111,6 +111,12 @@ export default{
 		Zero: function(){
 			/*Функция обрабатывает число "0" и запускает функцию numAdd().
 			Если последний символ не "." или число, то после нуля дописывается ".".*/
+			this.chk = this.find;
+			this.deleteTest();
+			this.chk = this.chk == this.find;
+			if(!this.chk){
+				this.find += this.output.slice(-1)
+			}
 			this.chk = this.newNum();
 			this.chk = this.chk.toString().indexOf(".") >= 0;
 			console.log(this.chk || ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1", "."].includes(this.last));
@@ -127,6 +133,12 @@ export default{
 		Dot: function(){
 			/*Функция добавляет в выражение плавающую точку.
 			Если точка - первый символ числа, на экран выводится "0.".*/
+			this.chk = this.find;
+			this.deleteTest();
+			this.chk = this.chk == this.find;
+			if(!this.chk){
+				this.find += this.output.slice(-1)
+			}
 			let f = parseInt(this.last, 10);
 			this.chk = this.newNum();
 			console.log(this.chk);

@@ -98,12 +98,14 @@ export default{
         this.TestNum = n;
       }
     },
-    hardEvalFix(): function{
+    hardEvalFix: function(){
       /*Функция исправление ответов с потерянными/добавленными 
       байтами в случаях несоответствия ответов из-за более чем
       одного символа.*/
-      let count, ln = 1, 1;
-      let sym, newTestNum = "", "";
+      let count = 1;
+      let ln = 1;
+      let sym = "";
+      let newTestNum = "";
       let TimeNum = this.config.find;
       let fStr = eval(find).toString().slice(-count);
       while(fStr[0] != "."){
@@ -115,7 +117,7 @@ export default{
       }
       let sumStr = Number("1" + "0".repeat(ln-1)) - Number(eval(this.config.find).toString().slice(-ln+1));
       fStr = fStr.slice(-ln+1).toString();
-      for(var i = 0; i < 9; i++){
+      for(var i = -9; i < 9; i++){
         if(sym == "-"){
           newTestNum = this.config.find + "+(-0." + "0".repeat(eval(this.config.find).toString().length-Number(fStr).toString().length-2) + (Number(sym == "-" ? fStr : sumStr) + i).toString() + ")";
         }else{

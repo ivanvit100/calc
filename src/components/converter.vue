@@ -6,7 +6,7 @@
 			<option disabled value="" selected>Конвертировать из</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
 		</select>
-		<img @click="swap" src="/static/img/icons/doubleArrow.png" alt="swap" id="doubleArrow" rel="preload">
+		<img @click="swap" src="@/assets/img/doubleArrow.png" alt="swap" id="doubleArrow" rel="preload">
 		<select v-model="val2" id="out">
 			<option disabled value="" selected>Конвертировать в</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
@@ -24,7 +24,7 @@ import myMain from './Main.vue';
 export default{
 	name: 'converter',
 	components: {myMain},
-	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'total', 'val1', 'val2'],
+	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'total', 'val1', 'val2', 'mark1', 'mark2'],
 	data(){
 		return{
 			key: "9116ea120a47ab05aa695a9c3199d1437def2d53", //Ключ для обращения к API
@@ -42,16 +42,16 @@ export default{
    	},
    	watch:{
    		val1(newVal, oldVal){
-   			if(newVal != oldVal && this.val2 != 0){
-   				this.apiGo();
-   				this.updateVal();
-   			}
+   			let sel = document.querySelector("#in");
+   			this.mark1 = sel.options[sel.selectedIndex].text.slice(-1);
+   			if(newVal != oldVal && this.val2 != 0){this.apiGo()}
+   			this.updateVal();
    		},
    		val2(newVal, oldVal){
-   			if(newVal != oldVal && this.val1 != 0){
-   				this.apiGo();
-   				this.updateVal();
-   			}
+   			let sel = document.querySelector("#out");
+   			this.mark2 = sel.options[sel.selectedIndex].text.slice(-1);
+   			if(newVal != oldVal && this.val1 != 0){this.apiGo()}
+   			this.updateVal();
    		},
    	},
 	methods:{
@@ -77,6 +77,8 @@ export default{
 			this.$emit('updateVal', {
 				val1: this.val1,
 				val2: this.val2,
+				mark1: this.mark1,
+				mark2: this.mark2,
 			});
 		},
 		apiGo: function(){

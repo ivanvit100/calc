@@ -19,7 +19,7 @@
 	<div class="button orange NumpadAdd Equal" id="plus" @click="operatorAdd('+', '+')">+</div>
 	<div class="button num0" @click="Zero()">0</div>
 	<div class="button Period Comma NumpadDecimal" @click="Dot()">.</div>
-	<div class="button Backspace" @click="Del()"><img src="/static/img/icons/dl.png" alt="del" id="del"></div>
+	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.png" alt="del" id="del"></div>
 	<div class="button Enter NumpadEnter" @click="Ok()">=</div>
 </div>
 </template>
@@ -119,11 +119,10 @@ export default{
 			}
 			this.chk = this.newNum();
 			this.chk = this.chk.toString().indexOf(".") >= 0;
-			console.log(this.chk || ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1", "."].includes(this.last));
 			if(this.chk || ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1", "."].includes(this.last)){this.numAdd("0")}
 			else if(["e", "π"].includes(this.output.slice(-1)) || this.output.slice(-1) == ")"){console.warn("[Zero]: Ошибка")}
 			else{
-				this.output += "0."; 
+				this.find == "" ? this.output = "0." : this.output += "0.";
 				this.find += "0.";
 				this.fact += "0.";
 				this.out = false;
@@ -165,6 +164,7 @@ export default{
 		operatorAdd: function(operator, func){
 			/*Функция получает на вход математический оператор, выводимый на экран,
 			и его вычисляемый аналог для подстановки в find.*/
+			if(this.output.slice(-1) == "^"){this.find = this.find.substring(0, this.find.length - 1)}
 			if(func == "**"){
 				this.chk = this.find;
 				this.deleteTest();
@@ -215,7 +215,7 @@ export default{
 			или является числом.
 			Закрывающих скобок не может быть больше, чем открывающих.*/
 			if((input == "(") && !(this.chk) && !([".", ")"].includes(this.last))){
-				this.output += input;
+				this.find == "" ? this.output = input : this.output += input;
 				this.find += input;
 			}
 			if((input == ")") && (this.chk || this.last == ")") && (this.last != ".") && (this.output.split("(").length - 1 > this.output.split(")").length - 1)){

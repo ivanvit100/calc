@@ -1,22 +1,22 @@
 <template>
 <div id="output" @dblclick="copyToClipboard">
 	<div id="switch">
-		<img v-if="dark" @click="light" src="/static/img/icons/light.png" alt="switch" class="swh">
-		<img v-else @click="light" src="/static/img/icons/dark.png" alt="switch" class="swh" rel="preload">
+		<img v-if="dark" @click="light" src="@/assets/img/light.png" alt="switch" class="swh">
+		<img v-else @click="light" src="@/assets/img/dark.png" alt="switch" class="swh" rel="preload">
 	</div>
 	<div id="mode">
-		<img :class="{act: act}" @click="mode(true)" src="/static/img/icons/calc.svg" alt="calculator" id="calcButton">
-		<img :class="{act: !act}" @click="mode(false)" src="/static/img/icons/usd.svg" alt="currecy" id="currencyButton">
+		<img :class="{act: act}" @click="modeChange(true)" src="@/assets/img/calc.svg" alt="calculator" id="calcButton">
+		<img :class="{act: !act}" @click="modeChange(false)" src="@/assets/img/usd.svg" alt="currecy" id="currencyButton">
 	</div>
-	<span id="find" class="blink">{{findText}}</span>
-	<span id="ans">{{ansText}}</span>
+	<span id="find" class="blink">{{findText}}{{!mode ? mark1 : ""}}</span>
+	<span id="ans">{{!mode && ansText == "" ? "0" : ansText}}{{!mode ? mark2 : ""}}</span>
 </div>
 </template>
 
 <script>
 export default{
 	name: 'myOutput',
-	props: ['findText', 'ansText', 'copyText'],
+	props: ['findText', 'ansText', 'copyText', 'mark1', 'mark2', 'mode'],
 	data(){
     	return{
     		dark: true,
@@ -24,7 +24,7 @@ export default{
     	}
     },
 	methods:{
-		mode: function(m){
+		modeChange: function(m){
 			/*Функция, переключающая режим работы приложения*/
 			this.act = m;
 			this.$emit('updateMode', {

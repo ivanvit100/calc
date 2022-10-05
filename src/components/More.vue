@@ -53,6 +53,7 @@ export default{
 		cnstAdd: function(p, f){
 			/*Функция получает на вход константу и её вычисляемый аналог в JS.
 			Подстановка происходит, если последний символ - не число.*/
+			if(this.last == "^"){this.find = this.find.substring(0, this.find.length - 1)}
 			if(["=", ">", "<", "-", "+", "/", "*", "", "("].includes(this.last1) && this.last1 != ""){
 				this.output += p;
     			this.find += f;

@@ -1,13 +1,13 @@
 <template>
 <div id="container">
-  <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText"></my-output>
+  <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText" :mark1="mark1" :mark2="mark2" :mode="mode"></my-output>
   <div id="calc" v-if="mode">
-    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="/static/img/icons/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
+    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="@/assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
     <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div v-else id="convCont">
-    <converter v-bind="config" @update="update" @updateVal="updateVal" @updateT="updateTotal" :findText="findText" :total="total" :val1="val1" :val2="val2"></converter>
+    <converter v-bind="config" @update="update" @updateVal="updateVal" @updateT="updateTotal" :findText="findText" :total="total" :val1="val1" :val2="val2" :mark1="mark1" :mark2="mark2"></converter>
     <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
@@ -36,6 +36,8 @@ export default{
       total: 0, //Курс выбранных валют
       val1: "", //Валюта: вход
       val2: "", //Валюта: выход
+      mark1: "", //
+      mark2: "", //
       config: {
         output: '', //Хранилище примера
         find: '', //Хранилище ответа
@@ -86,6 +88,8 @@ export default{
       /*Функция обновления значений валют для двусторонней связи*/
       this.val1 = data.val1;
       this.val2 = data.val2;
+      this.mark1 = data.mark1;
+      this.mark2 = data.mark2;
     },
     updateMode: function(data){
       /*Функция, переключающая режим работы приложения*/

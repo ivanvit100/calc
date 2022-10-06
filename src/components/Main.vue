@@ -60,7 +60,7 @@ export default{
 			/*Вспомогательная функция, удаляющая последствия работы
 			функции newTest в том случае, если данная вставка мешает
 			корректной работе приложения в дальнейшем.*/
-			if(this.find.toString().slice(-1) == ")"){
+			if(this.find.toString().slice(-1) == ")" && this.find.toString().slice(-1) != this.output.toString().slice(-1)){
 				this.TestNum = this.find;
 				this.newTestNum = "";
 				while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ")", "("].includes(this.TestNum.slice(-1))){

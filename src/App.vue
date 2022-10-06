@@ -36,8 +36,8 @@ export default{
       total: 0, //Курс выбранных валют
       val1: "", //Валюта: вход
       val2: "", //Валюта: выход
-      mark1: "", //
-      mark2: "", //
+      mark1: "", //Знак валюты: вход
+      mark2: "", //Знак валюты: выход
       config: {
         output: '', //Хранилище примера
         find: '', //Хранилище ответа
@@ -65,6 +65,11 @@ export default{
       True - если область просмотра больше 700px или #more_hide
       в режиме toMore.*/
       return !(this.arrow) || !(this.showOne)
+    },
+  },
+  watch:{
+    mode(newVal, oldVal){
+      this.showOne = true;
     },
   },
   methods:{

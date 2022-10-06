@@ -43,13 +43,13 @@ export default{
    	watch:{
    		val1(newVal, oldVal){
    			let sel = document.querySelector("#in");
-   			this.mark1 = sel.options[sel.selectedIndex].text.slice(-1);
+   			if(oldVal != this.val2 || oldVal == ""){this.mark1 = sel.options[sel.selectedIndex].text.slice(-1)}
    			if(newVal != oldVal && this.val2 != 0){this.apiGo()}
    			this.updateVal();
    		},
    		val2(newVal, oldVal){
    			let sel = document.querySelector("#out");
-   			this.mark2 = sel.options[sel.selectedIndex].text.slice(-1);
+   			if(oldVal != this.val1 || oldVal == ""){this.mark2 = sel.options[sel.selectedIndex].text.slice(-1)}
    			if(newVal != oldVal && this.val1 != 0){this.apiGo()}
    			this.updateVal();
    		},
@@ -91,9 +91,8 @@ export default{
 		},
 		swap: function(){
 			/*Функция, меняющая конвертируемые валюты местами*/
-			let change = this.val1;
-			this.val1 = this.val2;
-			this.val2 = change;
+			[this.val1, this.val2] = [this.val2, this.val1];
+			[this.mark1, this.mark2] = [this.mark2, this.mark1];
 			let doubleArrow = document.querySelector("#doubleArrow");
 			doubleArrow.style.transform == "rotate(0deg)" ? doubleArrow.style.transform = "rotate(360deg)" : doubleArrow.style.transform = "rotate(0deg)";
 			this.apiGo();

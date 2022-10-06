@@ -6,7 +6,7 @@
 			<option disabled value="" selected>Конвертировать из</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
 		</select>
-		<img @click="swap" src="@/assets/img/doubleArrow.png" alt="swap" id="doubleArrow" rel="preload">
+		<img @click="swap" src="@/assets/img/doubleArrow.svg" alt="swap" id="doubleArrow" rel="preload">
 		<select v-model="val2" id="out">
 			<option disabled value="" selected>Конвертировать в</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>
@@ -24,7 +24,7 @@ import myMain from './Main.vue';
 export default{
 	name: 'converter',
 	components: {myMain},
-	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'total', 'val1', 'val2', 'mark1', 'mark2'],
+	props: ['findText', 'output', 'find', 'ent', 'fact', 'total', 'val1', 'val2', 'mark1', 'mark2'],
 	data(){
 		return{
 			key: "9116ea120a47ab05aa695a9c3199d1437def2d53", //Ключ для обращения к API
@@ -60,7 +60,6 @@ export default{
 			this.$emit('update', {
 				output: this.output,
 				find: this.find,
-				copyText: this.copyText,
 				ent: this.ent,
 				fact: this.fact,
 			});
@@ -103,14 +102,14 @@ export default{
     	this.$nextTick(function(){
     		this.find = this.fact = "";
     		this.ent = false;
-    		this.copyText = this.output = "0";
+    		this.output = "0";
     		this.updateParent();
     	})
 	},
 	beforeDestroy(){
 		this.find = this.fact = "";
     	this.ent = false;
-    	this.copyText = this.output = "0";
+    	this.output = "0";
     	this.updateParent();
 	}
 }

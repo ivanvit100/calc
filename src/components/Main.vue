@@ -19,7 +19,7 @@
 	<div class="button orange NumpadAdd Equal" id="plus" @click="operatorAdd('+', '+')">+</div>
 	<div class="button num0" @click="Zero()">0</div>
 	<div class="button Period Comma NumpadDecimal" @click="Dot()">.</div>
-	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.png" alt="del" id="del"></div>
+	<div class="button Backspace" @click="Del()"><img src="@/assets/img/dl.svg" alt="del" id="del"></div>
 	<div class="button Enter NumpadEnter" @click="Ok()">=</div>
 </div>
 </template>
@@ -27,7 +27,7 @@
 <script>
 export default{
 	name: 'myMain',
-	props: ['findText', 'copyText', 'output', 'find', 'ent', 'fact', 'fix'],
+	props: ['findText', 'output', 'find', 'ent', 'fact', 'fix'],
 	data(){
 		return{
 			chk: false, //Вспомогательная переменная
@@ -50,7 +50,6 @@ export default{
 			this.$emit('update', {
 				output: this.output,
 				find: this.find,
-				copyText: this.copyText,
 				ent: this.ent,
 				fact: this.fact,
 				out: this.out
@@ -150,7 +149,7 @@ export default{
 				this.output += ".";
 				this.find += "0.";
 				this.fact += ".";
-				this.copyText = this.output;
+				this.output;
 			}
 			else if(!this.chk && (this.output.slice(-1) != ")") && !(["e", "π"].includes(this.output.slice(-1)))){
 				this.output += "0."; 

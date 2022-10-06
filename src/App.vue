@@ -1,19 +1,37 @@
 <template>
 <div id="container">
-  <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :copyText="copyText" :mark1="mark1" :mark2="mark2" :mode="mode"></my-output>
+  <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :mark1="mark1" :mark2="mark2" :mode="mode"></my-output>
   <div id="calc" v-if="mode">
-    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="@/assets/img/arrow.png" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
+    <!--<transition name="slide-fade" appear>-->
+    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="@/assets/img/arrow.svg" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
+    <!--</transition>-->
     <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div v-else id="convCont">
+    <transition name="slide-fade" appear>
     <converter v-bind="config" @update="update" @updateVal="updateVal" @updateT="updateTotal" :findText="findText" :total="total" :val1="val1" :val2="val2" :mark1="mark1" :mark2="mark2"></converter>
+    </transition>
     <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
     <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
   </div>
   <div id="copy">Скопировано</div>
 </div>
 </template>
+
+<!--<style>
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>-->
 
 <script>
 /*Импорт компонентов.*/
@@ -41,7 +59,6 @@ export default{
       config: {
         output: '', //Хранилище примера
         find: '', //Хранилище ответа
-        copyText: '0', //Копируемый текст
         ent: false, //Была ли вызвана функция Ok()
         fact: '', //Число для вычисления факториала
       },
@@ -80,7 +97,6 @@ export default{
       вызывает метод,обновляющий значения на экране.*/
       this.config.output = data.output;
       this.config.find = data.find;
-      this.config.copyText = data.copyText;
       this.config.ent = data.ent;
       this.config.fact = data.fact;
       if(!data.out){this.outputGo()}
@@ -166,7 +182,6 @@ export default{
       if(this.config.output.slice(-1) == "…" && this.config.output.length > parseInt(document.querySelector("#find").clientWidth/45)){this.findText = this.config.output.substring(0, parseInt(document.querySelector("#find").clientWidth/45)) + "…"}
       else{this.config.output.length > parseInt(document.querySelector("#find").clientWidth/45) ? this.findText = this.config.output.slice(-parseInt(document.querySelector("#find").clientWidth/45)) : this.findText = this.config.output}
       this.config.output.length == 0 ? this.findText =  "0" : this.findText = this.findText;
-      this.config.output != '' && this.config.output.slice(-1) != "…" ? this.config.copyText = this.config.output : this.config.copyText = this.config.copyText;
       this.ansGo();
     },
     ansGo: function(){
@@ -190,9 +205,9 @@ export default{
         eval(this.config.find).toString().length > this.count + 3 ? stop = eval(this.config.find).toString().substring(0, this.count + 2) : stop = eval(this.config.find);
         [Infinity, NaN, -Infinity].includes(stop) ? this.ansText = "Error" : this.ansText = stop;
         if(this.total != 0 && !this.mode){
-          this.config.copyText = this.ansText = this.ansText * this.total;
+          this.ansText = this.ansText * this.total;
           let newFind = this.ansText.toString().indexOf(".");
-          if(newFind >= 0){this.config.copyText = this.ansText = this.ansText.toString().substring(0, newFind + 3)}
+          if(newFind >= 0){this.ansText = this.ansText.toString().substring(0, newFind + 3)}
         }
       }catch(e){
         if(this.config.ent && this.config.output.length > this.count){

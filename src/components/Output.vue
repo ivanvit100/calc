@@ -1,8 +1,8 @@
 <template>
 <div id="output" @dblclick="copyToClipboard">
 	<div id="switch">
-		<img v-if="dark" @click="light" src="@/assets/img/light.png" alt="switch" class="swh">
-		<img v-else @click="light" src="@/assets/img/dark.png" alt="switch" class="swh" rel="preload">
+		<img v-if="dark" @click="light" src="@/assets/img/light.svg" alt="switch" class="swh">
+		<img v-else @click="light" src="@/assets/img/dark.svg" alt="switch" class="swh" rel="preload">
 	</div>
 	<div id="mode">
 		<img :class="{act: act}" @click="modeChange(true)" src="@/assets/img/calc.svg" alt="calculator" id="calcButton">
@@ -16,7 +16,7 @@
 <script>
 export default{
 	name: 'myOutput',
-	props: ['findText', 'ansText', 'copyText', 'mark1', 'mark2', 'mode'],
+	props: ['findText', 'ansText', 'mark1', 'mark2', 'mode'],
 	data(){
     	return{
     		dark: true,
@@ -38,14 +38,14 @@ export default{
 			event.preventDefault();
 			var input = document.createElement("input");
 			input.classList.add("copyInput");
-			input.value = this.copyText;
+			input.value = this.findText;
 			document.querySelector("#container").appendChild(input);
-			navigator.clipboard.writeText(this.copyText).then(() => {
-        		console.log("[Navigator]: clipboard write '" + this.copyText + "' success")
+			navigator.clipboard.writeText(this.findText).then(() => {
+        		console.log("[Navigator]: clipboard write '" + this.findText + "' success")
     		}, () => {
-    			document.querySelector("#copyInput").select();  
-    			cs = document.execCommand('copy');
-    			console.log("[Document]: clipboard write '" + cs + "'");
+    			document.querySelector(".copyInput").select();  
+    			let cs = document.execCommand('copy');
+    			console.log("[Document]: clipboard write '" + this.findText + "'");
     		});
     		input.remove();
     		document.querySelector("#copy").style.bottom = "20px";

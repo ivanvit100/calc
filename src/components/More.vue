@@ -23,7 +23,7 @@
 <script>
 export default{
 	name: 'more',
-	props: ['copyText', 'output', 'find', 'ent', 'fact'],
+	props: ['output', 'find', 'ent', 'fact'],
 	computed:{
 		last: function(){
 			return this.output.slice(-1)
@@ -38,7 +38,6 @@ export default{
 			this.$emit('update', {
 				output: this.output,
 				find: this.find,
-				copyText: this.copyText,
 				ent: this.ent,
 				fact: this.fact,
 			});

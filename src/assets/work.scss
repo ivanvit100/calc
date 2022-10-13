@@ -40,9 +40,9 @@ E-Mail: develope@ivanvit.ru */
 	background-color: $orange !important;
 }
 #output{
+	z-index: 2;
 	background-color: #363534;
 	border: 0;
-	width: 100wv;
 	height: 240px;
 	color: white;
 	font-size: 75px;
@@ -117,6 +117,7 @@ E-Mail: develope@ivanvit.ru */
 	height: 100%;
 }
 #more_hide, #currencyChange{
+	z-index: 2;
 	background-color: $orange;
 	width: 100%;
 	height: 25px;
@@ -129,7 +130,8 @@ E-Mail: develope@ivanvit.ru */
 	top: 4px;
 	height: 60%;
 	margin-left: 25px;
-	transition: transform .2s;
+	transition: transform .2s !important;
+	z-index: 9 !important;
 }
 #calcButton, #currencyButton, #arrow{
 	filter: invert(100%);
@@ -194,4 +196,38 @@ select{
 	filter: invert(40%);
 	transform: rotate(0deg);
 	transition: transform .3s ease-in-out;
+}
+.slide-fade-enter-active, .slide-fade-leave-active{
+	display: inline-block;
+	margin: 0;
+	width: 100%;
+}
+.slide-fade-enter-active{
+	z-index: 5;
+	transition: all .4s ease;
+}
+.slide-fade-leave-active{
+	z-index: 2;
+	opacity: 1;
+	transition: opacity .6s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to{
+	opacity: 0;
+	position: absolute;
+}
+.slide-fade-enter{
+	transform: translateX(100%);
+}
+.move.slide-fade-enter{
+	transform: translateX(-100%);
+}
+.slide-enter-active, .slide-leave-active{
+  z-index: 1 !important;
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  animation: come .2s;
+}
+.slide-leave-active{
+  animation: leave .2s;
 }

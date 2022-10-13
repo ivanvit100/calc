@@ -38,4 +38,10 @@ E-Mail: develope@ivanvit.ru */
 			box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.32) inset !important;
 		}
 	}
+	.slide-fade-leave-to{
+		position: relative;
+	}
+	.slide-fade-leave-active{
+		transition: opacity .3s ease;
+	}
 }

@@ -2,11 +2,13 @@
 <div id="container">
   <my-output @updateMode="updateMode" :findText="findText" :ansText="ansText" :mark1="mark1" :mark2="mark2" :mode="mode"></my-output>
   <div id="calc" v-if="mode">
-    <!--<transition name="slide-fade" appear>-->
-    <div id="more_hide" @click="moreHide" v-if="arrow"><img src="@/assets/img/arrow.svg" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
-    <!--</transition>-->
+    <transition name="slide-fade">
+    <div id="more_hide" class="move" @click="moreHide" v-if="arrow"><img src="@/assets/img/arrow.svg" alt="open" id="arrow" :class="{toCommon: classSwitch, toMore: !(classSwitch)}"></div>
+    </transition>
     <my-main v-show="showOne" v-bind="config" :fix="fix" :findText="findText" @update="update" ref="main"></my-main>
-    <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
+    <transition name="slide" appear>
+      <more v-if="pc" v-bind="config" @update="update" @opAdd="opAdd"></more>
+    </transition>
   </div>
   <div v-else id="convCont">
     <transition name="slide-fade" appear>
@@ -18,20 +20,6 @@
   <div id="copy">Скопировано</div>
 </div>
 </template>
-
-<!--<style>
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s ease;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active до версии 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
-}
-</style>-->
 
 <script>
 /*Импорт компонентов.*/
@@ -87,6 +75,7 @@ export default{
   watch:{
     mode(newVal, oldVal){
       this.showOne = true;
+      document.querySelector(".line").classList.toggle("move");
     },
   },
   methods:{

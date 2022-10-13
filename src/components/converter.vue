@@ -1,7 +1,7 @@
 <!--Компонент конвертера валют-->
 <template>
 <div id="converterKeyboard">
-	<div id="currencyChange">
+	<div id="currencyChange" class="move">
 		<select v-model="val1" id="in">
 			<option disabled value="" selected>Конвертировать из</option>
 			<option v-for="item in currency" v-bind:value="item.name">{{item.fullname}}, {{item.mark}}</option>

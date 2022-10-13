@@ -32,3 +32,19 @@ E-Mail: develope@ivanvit.ru */
 		border-inline-end: 6px solid rgba(0, 0, 0, 0);
 	}
 }
+@keyframes come{
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes leave{
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(-200%);
+  }
+}

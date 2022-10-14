@@ -122,24 +122,26 @@ export default{
       let newTestNum = "";
       let TimeNum = this.config.find;
       let fStr = eval(find).toString().slice(-count);
-      while(fStr[0] != "."){
-        fStr = eval(this.config.find).toString().slice(-count);
-        fStr[0] == "0" ? sym = "-" : sym = sym;
-        fStr[0] == "9" ? sym = "" : sym = sym;
-        count++;
-        fStr[0] == "0" || fStr[0] == "9" ? ln = count : ln = ln;
-      }
-      let sumStr = Number("1" + "0".repeat(ln-1)) - Number(eval(this.config.find).toString().slice(-ln+1));
-      fStr = fStr.slice(-ln+1).toString();
-      for(var i = -9; i < 9; i++){
-        if(sym == "-"){
-          newTestNum = this.config.find + "+(-0." + "0".repeat(eval(this.config.find).toString().length-Number(fStr).toString().length-2) + (Number(sym == "-" ? fStr : sumStr) + i).toString() + ")";
-        }else{
-          newTestNum = this.config.find + "+(0." + "0".repeat(eval(this.config.find).toString().length-2-(sym == "-" ? fStr : sumStr).toString().length) + (Number(sym == "-" ? fStr : sumStr) + i).toString() + ")";
+      try{
+        while(fStr[0] != "."){
+          fStr = eval(this.config.find).toString().slice(-count);
+          fStr[0] == "0" ? sym = "-" : sym = sym;
+          fStr[0] == "9" ? sym = "" : sym = sym;
+          count++;
+          fStr[0] == "0" || fStr[0] == "9" ? ln = count : ln = ln;
         }
-        eval(newTestNum).toString().length < eval(this.config.find).toString().length && eval(newTestNum).toString().length < eval(TimeNum).toString().length ? TimeNum = newTestNum : TimeNum = TimeNum;
-      }
-      if(TimeNum != this.config.find){this.config.find = TimeNum}
+        let sumStr = Number("1" + "0".repeat(ln-1)) - Number(eval(this.config.find).toString().slice(-ln+1));
+        fStr = fStr.slice(-ln+1).toString();
+        for(var i = -9; i < 9; i++){
+          if(sym == "-"){
+            newTestNum = this.config.find + "+(-0." + "0".repeat(eval(this.config.find).toString().length-Number(fStr).toString().length-2) + (Number(sym == "-" ? fStr : sumStr) + i).toString() + ")";
+          }else{
+            newTestNum = this.config.find + "+(0." + "0".repeat(eval(this.config.find).toString().length-2-(sym == "-" ? fStr : sumStr).toString().length) + (Number(sym == "-" ? fStr : sumStr) + i).toString() + ")";
+          }
+          eval(newTestNum).toString().length < eval(this.config.find).toString().length && eval(newTestNum).toString().length < eval(TimeNum).toString().length ? TimeNum = newTestNum : TimeNum = TimeNum;
+        }
+        if(TimeNum != this.config.find){this.config.find = TimeNum}
+      }catch(e){console.warn("[hardEvalFix]: Дана бесконечная дробь, вычисления прерваны!")}
     },
     opAdd: function(data){
       /*Функция вызова метода operatorAdd из других компонентов*/

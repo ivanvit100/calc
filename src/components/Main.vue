@@ -59,7 +59,7 @@ export default{
 			/*Вспомогательная функция, удаляющая последствия работы
 			функции newTest в том случае, если данная вставка мешает
 			корректной работе приложения в дальнейшем.*/
-			if(this.find.toString().slice(-1) == ")" && this.find.toString().slice(-1) != this.output.toString().slice(-1)){
+			if(this.find.toString().slice(-1) == ")"){
 				this.TestNum = this.find;
 				this.newTestNum = "";
 				while(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", ")", "("].includes(this.TestNum.slice(-1))){
@@ -69,7 +69,7 @@ export default{
 				if(this.TestNum.slice(-2) == "(-"){
 					this.newTestNum = "(-" + this.newTestNum
 				}
-				if(this.newTestNum.substring(0, 1) == "("){
+				if(this.newTestNum.substring(0, 1) == "(" && (this.TestNum.slice(-1) == "+" || this.TestNum.slice(-3) == "+(-")){
 					this.find = this.find.substring(0, this.find.length - this.newTestNum.length - 2);
 					this.updateParent();
 				}
@@ -139,7 +139,6 @@ export default{
 			}
 			let f = parseInt(this.last, 10);
 			this.chk = this.newNum();
-			console.log(this.chk);
 			this.chk = this.chk.toString().indexOf(".") >= 0;
 			if(!this.chk && !Number.isNaN(f)){
 				this.operatorAdd(".", ".");
